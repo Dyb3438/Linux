@@ -1,0 +1,121 @@
+* {
+    transition: all .2s;
+}
+.container {
+    margin-top: 10vh;
+    width: 363px;
+    background-color: rgba(255, 255, 255, 0.92);
+    border-radius: 4px;
+    padding: 50px 0;
+}
+body {
+    margin: 0;
+    text-align: center;
+}
+div {
+    display: inline-block;
+}
+.title {
+    font-size: 60px;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    color: #009CFF;
+    margin-bottom: 40px;
+}
+#background-slideshow {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    overflow: hidden;
+    z-index: -1;
+}
+.slideshow {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    display: block;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    animation: slideshow 0.5s linear;
+    transition: opacity 0.5s linear;
+}
+.slideshow:nth-child(1) {
+    z-index: -1;
+}
+.slideshow:nth-child(2) {
+    z-index: -2;
+}
+@keyframes slideshow {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.sign-input {
+    border: 1px #aaa solid;
+    border-radius: 4px;
+    width: 270px;
+    height: 40px;
+    padding: 0 15px;
+    font-size: 16px;
+}
+.sign-input:focus {
+    border-color: #549df8;
+}
+.inputArea {
+    position: relative;
+    margin-bottom: 8px;
+}
+.information {
+    padding: 0 15px;
+    font-size: 14px;
+    display: block;
+    text-align: left;
+    transition: all .2s;
+}
+.right {
+    color: #44E86C;
+    border-color: #44E86C;
+}
+.warn {
+    color: #ff5b5b;;
+    border-color: #ff5b5b;;
+}
+.slideup {
+    position: absolute;
+    opacity: 0;
+    height: 0 !important;
+}
+.submit {
+    border: 1px #3083ff solid;
+    border-radius: 4px;
+    background-color: #3487ff;
+    box-shadow: 0 5px 8px 0 rgba(24,95,255,.1);
+    color: #fff;
+    width: 300px;
+    height: 48px;
+    margin-top: 40px;
+    font-size: 19px;
+}
+.submit:hover {
+    background-color: #3580eb;
+}
+.check {
+    font-size: 30px;
+    display: block;
+    right: 5px;
+    top: 0;
+    position: absolute;
+    color: #ff5b5b;
+}
+.code {
+    width: 120px;
+    height: 50px;
+    display: block;
+    right: 5px;
+    top: 0;
+    position: absolute;
+}

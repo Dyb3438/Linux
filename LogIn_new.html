@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="UTF-8">
+        <title>登陆</title>
+        <link rel="stylesheet" type="text/css" href="./css/sign.css">
+        <style type="text/css"></style>
+    </head>
+    <body>
+        <div id="background-slideshow">
+            <div class="slideshow"></div>
+            <div class="slideshow"></div>
+        </div>
+        <div class="container">
+            <div class="title">LogIn</div>
+            <form name="client" id="client" action="Client.php" method="POST" target="formTarget" enctype="multipart/form-data">
+                <div class="inputArea">
+                    <input input type="text" name="UserId" id="UserId" class="sign-input" placeholder="账号" required="required" onfocus="initInfo(this);seeInf(this)" onblur="initInfo(this)" status="0">
+                    <div class="information slideup"></div>
+                    <div class="information warn slideup">用户账号不存在，请先注册</div>
+                    <div class="check" style="display: none;">×</div>
+                </div>
+                <div class="inputArea">
+                    <input type="password" name="UserPassword" id="UserPassword" class="sign-input" placeholder="密码" required="required" onfocus="initInfo(this);seeInf(this)" onblur="initInfo(this)" status="0">
+                    <div class="information slideup"> </div>
+                    <div class="information warn slideup">密码错误!</div>
+                    <div class="check" style="display: none;">×</div>
+                </div>
+                <div class="inputArea">
+                    <input type="text" name="Code" id="Code" class="sign-input" style="width: 135px; margin-right: 135px;" placeholder="请输入验证码" required="required" maxlength="4" onfocus="initInfo(this);seeInf(this)" onblur="initInfo(this)">
+                    <div class="information slideup">
+                        <div class="information">单击图片切换验证码</div>
+                    </div>
+                    <div class="information warn slideup">验证码错误！</div>
+                    <div class="check" style="display: none;">×</div>
+                    <img id="code" src="code.php" class="code" onclick="this.src='code.php?p'+Math.random()">
+                </div>
+                <input type="submit" class="submit" value="登陆">
+            </form>
+        </div>
+        <iframe name="formTarget" id="formTarget" style="display: none;" onload="clientCheck(this)"></iframe>
+        <script src="./js/background-image.js"></script>
+        <script src="./js/sign.js"></script>
+        <script type="text/javascript">
+            function clientCheck(iframe) {
+                var response = iframe.contentDocument.getElementsByTagName("body")[0].innerHTML;
+                var reg = /{.+}/;
+                var message = JSON.parse(response.match(reg));
+                if (message.result == "Y") {
+                    document.getElementById("client").reset();
+                    location.pathname = "/hmh/index.html";
+                } else if(message.result == "N") {
+                    resetCode();
+                    if (message.msg == "验证码错误！") {
+                        inputErr(document.getElementById("Code"));
+                    } else if (message.msg == "用户账号不存在，请先注册") {
+                        inputErr(document.getElementById("UserId"));
+                    } else if (message.msg == "密码错误！") {
+                        inputErr(document.getElementById("UserPassword"));
+                    } else {
+                        alert("受到不明电波干扰，登陆失败了");
+                    }
+                }
+            }
+        </script>
+    </body>
+</html>
