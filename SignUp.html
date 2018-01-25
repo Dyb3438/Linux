@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>注册</title>
-        <link rel="stylesheet" type="text/css" href="./css/sign.css">
+        <link rel="stylesheet" type="text/css" href="css/sign.css">
         <style type="text/css">
             .loadAvatarButton {
                 border: 1px #3083ff solid;
@@ -46,7 +46,7 @@
             <div class="slideshow"></div>
         </div>
         <div class="container">
-            <div class="title">SignUp</div>
+            <a href="index.html"><div class="title">SignUp</div></a>
             <form name="apply" id="apply" action="Apply.php" method="POST" target="formTarget" onsubmit="return check()" enctype="multipart/form-data">
                 <div id="front" style="display: inline-block;">
                     <div class="inputArea">
@@ -104,11 +104,12 @@
                     <button class="loadAvatarButton" onsubmit="return false" type="button" onclick="toFront()">返回</button>
                 </div>
             </form>
+            <a href="LogIn.html" class="link">已有账号？快去登录吧</a>
         </div>
         <iframe name="formTarget" id="formTarget" style="display: none;" onload="applyCheck(this)"></iframe>
-        <script src="./js/background-image.js"></script>
-        <script type="text/javascript" src="./js/ajax.js"></script>
-        <script type="text/javascript" src="./js/sign.js"></script>
+        <script src="js/background-image.js"></script>
+        <script type="text/javascript" src="js/ajax.js"></script>
+        <script type="text/javascript" src="js/sign.js"></script>
         <script type="text/javascript">
             function preview(element) {
                 var previewArea = element.nextElementSibling;
@@ -258,7 +259,7 @@
                 if (message.result == "Y") {
                     alert("注册成功");
                     document.getElementById("apply").reset();
-                    location.pathname = "/www/index.html";
+                    location.pathname = "/index.html";
                 } else if(message.result == "N") {
                     resetCode();
                     if (message.msg == "\u9a8c\u8bc1\u7801\u9519\u8bef\uff01") {

@@ -1,0 +1,113 @@
+* {
+    transition: all .2s;
+}
+html,body {
+    margin: 0;
+    border: 0;
+    padding: 0;
+}
+.banner {
+    height: 170px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background-image: url("../png/banner.png");
+    background-size: cover;
+    background-position: center;
+}
+.menu {
+    display: inline-block;
+    height: 42px;
+    position: absolute;
+    top: 0;
+    width: 90vw;
+    background-color: rgba(255, 255, 255, .4);
+    line-height: 42px;
+    padding: 0 5vw;
+}
+.logo {
+    position: relative;
+    display: inline-block;
+    float: left;
+    background-image: url("../png/logo.png");
+    background-size: contain;
+    height: 42px;
+    width: 183px;
+    margin-right: 20px;
+}
+.search {
+    display: inline-block;
+    position: relative;
+    top: 3px;
+    height: 36px;
+    float: left;
+    border: none;
+    border-radius: 4px;
+    padding: 0 8px 0 26px;
+    color: #666;
+    font-size: 14px;
+    background: #fff;
+}
+.menu-button {
+    display: inline-block;
+    height: 42px;
+    top: 0;
+    position: relative;
+    padding: 0 11px;
+    font-size: 12px;
+    color: #222;
+    float: right;
+}
+.menu-button:hover {
+    background-color: rgba(255, 255, 255, .4);
+}
+.menu-avatar {
+    display: inline-block;
+    top: 0;
+    position: relative;
+    width: 42px;
+    height: 42px;
+    border-radius: 100%;
+    padding: 0 11px;
+    float: right;
+}
+.container {
+    display: inline-block;
+    position: absolute;
+    top: 170px;
+    margin: 8px 10vw;
+    width: 80vw;
+    /*box-shadow: 0 0 5px -3px #000;*/
+    /*background-color: #dceffe;*/
+}
+.tbody {
+    display: inline-block;
+    height: 50px;
+    width: 100%;
+    line-height: 50px;
+    border-bottom: 1px solid #e5e9ef;
+}
+.tbody:hover {
+    background-color: #F2F2F2;
+}
+.right-side {
+    display: inline-block;
+    position: fixed;
+    top: 232px;
+    right: 10px;
+    background-color: #f6f9fa;
+    border: 1px solid #e5e9ef;
+    border-radius: 4px;
+}
+.right-side-button {
+    width: 48px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-size: 12px;
+    color: #000;
+}
+.right-side-button:hover {
+    background-color: #00a1d6;
+    color: #fff;
+}

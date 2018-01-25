@@ -119,3 +119,9 @@ div {
     top: 0;
     position: absolute;
 }
+.link {
+    color: #3487ff;
+}
+.link:visited {
+    color: #3487ff;
+}

@@ -2,8 +2,8 @@
 <html lang="zh-cmn-Hans">
     <head>
         <meta charset="UTF-8">
-        <title>登陆</title>
-        <link rel="stylesheet" type="text/css" href="./css/sign.css">
+        <title>登录</title>
+        <link rel="stylesheet" type="text/css" href="css/sign.css">
         <style type="text/css"></style>
     </head>
     <body>
@@ -12,7 +12,7 @@
             <div class="slideshow"></div>
         </div>
         <div class="container">
-            <div class="title">LogIn</div>
+            <a href="index.html"><div class="title">LogIn</div></a>
             <form name="client" id="client" action="Client.php" method="POST" target="formTarget" enctype="multipart/form-data">
                 <div class="inputArea">
                     <input input type="text" name="UserId" id="UserId" class="sign-input" placeholder="账号" required="required" onfocus="initInfo(this);seeInf(this)" onblur="initInfo(this)" status="0">
@@ -37,10 +37,11 @@
                 </div>
                 <input type="submit" class="submit" value="登陆">
             </form>
+            <a href="SignUp.html" class="link">没有账号？赶紧去注册吧</a>
         </div>
         <iframe name="formTarget" id="formTarget" style="display: none;" onload="clientCheck(this)"></iframe>
-        <script src="./js/background-image.js"></script>
-        <script src="./js/sign.js"></script>
+        <script src="js/background-image.js"></script>
+        <script src="js/sign.js"></script>
         <script type="text/javascript">
             function clientCheck(iframe) {
                 var response = iframe.contentDocument.getElementsByTagName("body")[0].innerHTML;
