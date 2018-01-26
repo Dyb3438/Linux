@@ -107,8 +107,22 @@
             <a href="LogIn.html" class="link">已有账号？快去登录吧</a>
         </div>
         <iframe name="formTarget" id="formTarget" style="display: none;" onload="applyCheck(this)"></iframe>
-        <script src="js/background-image.js"></script>
         <script type="text/javascript" src="js/ajax.js"></script>
+        <script type="text/javascript">
+            ajax({
+                "url": "User-image.php",
+                "method": "GET",
+                "success": function(res) {
+                    console.log(res);
+                    var msg = JSON.parse(res);
+                    if (msg.result == "Y") {
+                        alert("你已登录！")
+                        location.pathname = "index.html";
+                    }
+                }
+            });
+        </script>
+        <script src="js/background-image.js"></script>
         <script type="text/javascript" src="js/sign.js"></script>
         <script type="text/javascript">
             function preview(element) {

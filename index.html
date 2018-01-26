@@ -27,6 +27,10 @@
                 font-size: 12px;
                 font-weight: bold;
             }
+            .previewArea {
+                width: 200px;
+                height: 200px;
+            }
         </style>
     </head>
     <body>
@@ -39,10 +43,53 @@
                 <div class="logo"></div>
                 <div class="catchphrase">在这里，你能获取更多时间</div>
             </div>
-            <div><a href="logIn.html"><button class="submit">登录</button></a></div>
-            <div><a href="SignUp.html"><button class="submit">注册</button></a></div>
-            <div><a href="forum.html"><button class="submit">游客访问</button></a></div>
+            <div id="unlogin">
+                <div><a href="logIn.html"><button class="submit">登录</button></a></div>
+                <div><a href="SignUp.html"><button class="submit">注册</button></a></div>
+                <div><a href="forum.html"><button class="submit">游客访问</button></a></div>
+            </div>
+            <div id="logined">
+                <img src="" class="previewArea" id="avatar">
+                <div><a href="forum.html"><button class="submit">访问论坛</button></a></div>
+                <div><a href="javascript:void(0)"><button class="submit" onclick="logOff()">注销</button></a></div>
+            </div>
         </div>
+        <script type="text/javascript" src="js/ajax.js"></script>
+        <script type="text/javascript">
+            ajax({
+                "url": "User-image.php",
+                "method": "GET",
+                "success": function(res) {
+                    var unlogin = document.getElementById("unlogin");
+                    var logined = document.getElementById("logined");
+                    var avatar = document.getElementById("avatar");
+                    var msg = JSON.parse(res);
+                    if (msg.result == "N") {
+                        logined.style.display = "none";
+                    } else if (msg.result == "Y") {
+                        unlogin.style.display = "none";
+                        avatar.src = msg.userphoto;
+                    }
+                }
+            });
+        </script>
         <script src="js/background-image.js"></script>
+        <script type="text/javascript">
+            function logOff() {
+                ajax({
+                    "url": "Log_Off.php",
+                    "method": "GET",
+                    "success": function(res) {
+                        var msg = JSON.parse(res);
+                        if (msg.result == "Y") {
+                            location.pathname = "index.html";
+                        } else if (msg.result == "N") {
+                            alert("可能你姿势不对，注销失败");
+                            location.pathname = "index.html";
+                        }
+                    }
+                })
+            }
+        </script>
     </body>
 </html>

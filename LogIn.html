@@ -40,6 +40,21 @@
             <a href="SignUp.html" class="link">没有账号？赶紧去注册吧</a>
         </div>
         <iframe name="formTarget" id="formTarget" style="display: none;" onload="clientCheck(this)"></iframe>
+        <script type="text/javascript" src="js/ajax.js"></script>
+        <script type="text/javascript">
+            ajax({
+                "url": "User-image.php",
+                "method": "GET",
+                "success": function(res) {
+                    console.log(res);
+                    var msg = JSON.parse(res);
+                    if (msg.result == "Y") {
+                        alert("你已登录！")
+                        location.pathname = "index.html";
+                    }
+                }
+            });
+        </script>
         <script src="js/background-image.js"></script>
         <script src="js/sign.js"></script>
         <script type="text/javascript">
@@ -49,7 +64,7 @@
                 var message = JSON.parse(response.match(reg));
                 if (message.result == "Y") {
                     document.getElementById("client").reset();
-                    location.pathname = "/hmh/index.html";
+                    location.pathname = "/index.html";
                 } else if(message.result == "N") {
                     resetCode();
                     if (message.msg == "验证码错误！") {

@@ -22,10 +22,11 @@ div {
     margin-bottom: 40px;
 }
 #background-slideshow {
-    display: block;
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    position: fixed;
     overflow: hidden;
     z-index: -1;
 }
