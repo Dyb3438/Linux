@@ -7,24 +7,71 @@
         <style type="text/css"></style>
     </head>
     <body onselectstart="return false;">
-        <div class="banner"></div>
+        <div class="banner" id="banner"></div>
         <div class="menu">
             <a href="index.html"><div class="logo"></div></a>
-            <input type="text" name="" class="search" placeholder="搜索">
-            <a href=""><div class="menu-button">注销</div></a>
-            <a href=""><img src="userphoto/root.png" class="menu-avatar"></a>
-            <a href="SignUp.html"><div class="menu-button">注册</div></a>
-            <a href="LogIn.html"><div class="menu-button">登陆</div></a>
+            <input type="text" name="" class="search" placeholder="搜索" formaction="">
+            <div id="logined">
+                <a href="javascript:void(0)"><div class="menu-button" onclick="logOff()">注销</div></a>
+                <a href="javascript:void(0)"><div class="menu-button" id="username"></div></a>
+                <a href=""><img src="userphoto/root.png" class="menu-avatar" id="avatar"></a>
+            </div>
+            <div id="unlogin">
+                <a href="SignUp.html"><div class="menu-button">注册</div></a>
+                <a href="LogIn.html"><div class="menu-button">登录</div></a>
+            </div>
         </div>
         <div class="container">
-            <div class="tbody"><div>123456</div></div>
-            <div class="tbody"><div>123456</div></div>
+            <div id="forum-title">
+                <div class="tbody">
+                    <div class="t1" title="标题1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"><a href="">标题1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</a></div><div class="t2"><a href="" class="t2-author">作者</a><span class="t2-time">时间</span></div>
+                </div>
+                <div class="tbody">
+                    <div class="t1" title="标题1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"><a href="">标题1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</a></div><div class="t2"><a href="" class="t2-author">作者</a><span class="t2-time">时间</span></div>
+                </div>
+                <div class="tbody">
+                    <div class="t1" title="标题1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"><a href="">标题1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</a></div><div class="t2"><a href="" class="t2-author">作者</a><span class="t2-time">时间</span></div>
+                </div>
+            </div>
+            <div id="post-forum">
+                <div style="margin-bottom: 8px;">..:: 发贴 ::..</div>
+                <form method="POST" action="Forum-post.php" target="formTarget">
+                    <input type="text" name="Notename" class="post-title-input" placeholder="请填写标题">
+                    <textarea name="Content" class="Content"></textarea>
+                    <input type="submit" value="发表" class="sendButton">
+                </form>
+            </div>
         </div>
-        <div class="right-side">
-            <div class="right-side-button">发帖</div>
-            <div class="right-side-button">刷新</div>
-            <div class="right-side-button">TOP</div>
+        <div class="right-side" id="right-side">
+            <a href="#post-forum"><div class="right-side-button">发帖</div></a>
+            <a href="javascript:void(0)"><div class="right-side-button" onclick="location.reload()">刷新</div></a>
+            <a href="#banner"><div class="right-side-button">TOP</div></a>
         </div>
-        <script></script>
+        <script type="text/javascript" src="js/ajax.js"></script>
+        <script type="text/javascript">
+            ajax({
+                "url": "User-image.php",
+                "method": "GET",
+                "success": function(res) {
+                    var unlogin = document.getElementById("unlogin");
+                    var logined = document.getElementById("logined");
+                    var avatar = document.getElementById("avatar");
+                    var rightPostButton = document.getElementById("right-side").children[0];
+                    var postForum = document.getElementById("post-forum");
+                    var username = document.getElementById("username");
+                    var msg = JSON.parse(res);
+                    if (msg.result == "N") {
+                        logined.style.display = "none";
+                        rightPostButton.style.display = "none";
+                        postForum.style.display = "none";
+                    } else if (msg.result == "Y") {
+                        unlogin.style.display = "none";
+                        avatar.src = msg.userphoto;
+                    }
+                }
+            });
+        </script>
+        <script src="js/forum.js"></script>
+        <iframe name="formTarget" id="formTarget" style="display: none;" onload="postres(this)"></iframe>
     </body>
 </html>

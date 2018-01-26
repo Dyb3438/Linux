@@ -5,6 +5,7 @@ html,body {
     margin: 0;
     border: 0;
     padding: 0;
+    background-color: #D2E9FB;
 }
 .banner {
     height: 170px;
@@ -24,6 +25,7 @@ html,body {
     background-color: rgba(255, 255, 255, .4);
     line-height: 42px;
     padding: 0 5vw;
+    overflow: hidden;
 }
 .logo {
     position: relative;
@@ -42,7 +44,7 @@ html,body {
     height: 36px;
     float: left;
     border: none;
-    border-radius: 4px;
+    border-radius: 18px;
     padding: 0 8px 0 26px;
     color: #666;
     font-size: 14px;
@@ -73,7 +75,7 @@ html,body {
 }
 .container {
     display: inline-block;
-    position: absolute;
+    position: relative;
     top: 170px;
     margin: 8px 10vw;
     width: 80vw;
@@ -81,14 +83,53 @@ html,body {
     /*background-color: #dceffe;*/
 }
 .tbody {
+    position: relative;
     display: inline-block;
     height: 50px;
     width: 100%;
-    line-height: 50px;
     border-bottom: 1px solid #e5e9ef;
+    overflow: hidden;
 }
 .tbody:hover {
-    background-color: #F2F2F2;
+    box-shadow: 0 3px 3px #e5e9ef;
+    z-index: 5;
+}
+.tbody a{
+    color: #222;
+    text-decoration: none;
+}
+#forum-title{
+    padding: 3px;
+    width: calc(100% - 6px);
+}
+.t1 {
+    padding: 6px;
+    padding-left: 50px;
+    line-height: 38px;
+    display: inline-block;
+    width: calc(72% - 56px);
+    height: 38px;
+    font-weight: bold;
+    word-break: break-all;
+    border-right: solid 1px #e5e9ef;
+}
+.t2 {
+    position: absolute;
+    right: 0;
+    display: inline-block;
+    padding: 6px;
+    width: calc(28% - 12px);
+    height: 38px;
+    text-align: center;
+}
+.t2-author {
+    display: block;
+    font-size: 10px;
+}
+.t2-time {
+    display: block;
+    font-size: 10px;
+    color: #99a2aa;
 }
 .right-side {
     display: inline-block;
@@ -98,6 +139,7 @@ html,body {
     background-color: #f6f9fa;
     border: 1px solid #e5e9ef;
     border-radius: 4px;
+    width: 48px;
 }
 .right-side-button {
     width: 48px;
@@ -106,8 +148,78 @@ html,body {
     text-align: center;
     font-size: 12px;
     color: #000;
+    float: left;
 }
 .right-side-button:hover {
     background-color: #00a1d6;
     color: #fff;
+}
+#post-forum {
+    padding: 15px;
+    border-radius: 8px;
+    width: calc(100% - 30px);
+    font-size: 16px;
+    margin-top: 18px;
+    background-color: #fff;
+    overflow: hidden;
+}
+.Content {
+    display: inline-block;
+    position: relative;
+    height: 200px;
+    width: calc(100% - 26px);
+    float: left;
+    padding: 0 8px 0 26px;
+    color: #666;
+    font-size: 14px;
+    line-height: 19px;
+    background: #e5e9ef;
+    padding: 8px 12px;
+    border: 1px solid #e5e9ef;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    color: #222;
+    resize: none;
+}
+.post-title-input {
+    display: inline-block;
+    position: relative;
+    height: 30px;
+    width: calc(100% - 26px);
+    float: left;
+    padding: 0 8px 0 26px;
+    color: #666;
+    font-size: 16px;
+    line-height: 30px;
+    background: #e5e9ef;
+    padding: 8px 12px;
+    border: 1px solid #e5e9ef;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    color: #222;
+}
+.post-title-input:hover, .Content:hover, .post-title-input:focus, .Content:focus {
+    border-color: #23ade5;
+    background-color: #fff;
+}
+#forum-title {
+    background-color: #fff;
+    border-radius: 8px;
+}
+.sendButton{
+    width: 70px;
+    height: 32px;
+    border: none;
+    border-radius: 6px;
+    background-color: #fb7299;
+    color: #fff;
+    font-size: 14px;
+    float: right;
+}
+.sendButton:hover {
+    background-color: #ffaec9;
+}
+#username {
+    color: #fb7299;
+    font-weight: bold;
 }

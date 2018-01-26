@@ -39,7 +39,6 @@
             </form>
             <a href="SignUp.html" class="link">没有账号？赶紧去注册吧</a>
         </div>
-        <iframe name="formTarget" id="formTarget" style="display: none;" onload="clientCheck(this)"></iframe>
         <script type="text/javascript" src="js/ajax.js"></script>
         <script type="text/javascript">
             ajax({
@@ -60,24 +59,27 @@
         <script type="text/javascript">
             function clientCheck(iframe) {
                 var response = iframe.contentDocument.getElementsByTagName("body")[0].innerHTML;
-                var reg = /{.+}/;
-                var message = JSON.parse(response.match(reg));
-                if (message.result == "Y") {
-                    document.getElementById("client").reset();
-                    location.pathname = "/index.html";
-                } else if(message.result == "N") {
-                    resetCode();
-                    if (message.msg == "验证码错误！") {
-                        inputErr(document.getElementById("Code"));
-                    } else if (message.msg == "用户账号不存在，请先注册") {
-                        inputErr(document.getElementById("UserId"));
-                    } else if (message.msg == "密码错误！") {
-                        inputErr(document.getElementById("UserPassword"));
-                    } else {
-                        alert("受到不明电波干扰，登陆失败了");
+                if (response != "") {
+                    var reg = /{.+}/;
+                    var message = JSON.parse(response.match(reg));
+                    if (message.result == "Y") {
+                        document.getElementById("client").reset();
+                        location.pathname = "/index.html";
+                    } else if(message.result == "N") {
+                        resetCode();
+                        if (message.msg == "验证码错误！") {
+                            inputErr(document.getElementById("Code"));
+                        } else if (message.msg == "用户账号不存在，请先注册") {
+                            inputErr(document.getElementById("UserId"));
+                        } else if (message.msg == "密码错误！") {
+                            inputErr(document.getElementById("UserPassword"));
+                        } else {
+                            alert("受到不明电波干扰，登陆失败了");
+                        }
                     }
                 }
             }
         </script>
+        <iframe name="formTarget" id="formTarget" style="display: none;" onload="clientCheck(this)"></iframe>
     </body>
 </html>

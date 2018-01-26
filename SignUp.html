@@ -106,7 +106,6 @@
             </form>
             <a href="LogIn.html" class="link">已有账号？快去登录吧</a>
         </div>
-        <iframe name="formTarget" id="formTarget" style="display: none;" onload="applyCheck(this)"></iframe>
         <script type="text/javascript" src="js/ajax.js"></script>
         <script type="text/javascript">
             ajax({
@@ -268,21 +267,24 @@
             }
             function applyCheck(iframe) {
                 var response = iframe.contentDocument.getElementsByTagName("body")[0].innerHTML;
-                var reg = /{.+}/;
-                var message = JSON.parse(response.match(reg));
-                if (message.result == "Y") {
-                    alert("注册成功");
-                    document.getElementById("apply").reset();
-                    location.pathname = "/index.html";
-                } else if(message.result == "N") {
-                    resetCode();
-                    if (message.msg == "\u9a8c\u8bc1\u7801\u9519\u8bef\uff01") {
-                        inputErr(document.getElementById('Code'));
-                    } else {
-                        alert("可能是你姿势不对，注册失败了");
+                if (response != "") {
+                    var reg = /{.+}/;
+                    var message = JSON.parse(response.match(reg));
+                    if (message.result == "Y") {
+                        alert("注册成功");
+                        document.getElementById("apply").reset();
+                        location.pathname = "/index.html";
+                    } else if(message.result == "N") {
+                        resetCode();
+                        if (message.msg == "\u9a8c\u8bc1\u7801\u9519\u8bef\uff01") {
+                            inputErr(document.getElementById('Code'));
+                        } else {
+                            alert("可能是你姿势不对，注册失败了");
+                        }
                     }
                 }
             }
         </script>
+        <iframe name="formTarget" id="formTarget" style="display: none;" onload="applyCheck(this)"></iframe>
     </body>
 </html>
