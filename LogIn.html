@@ -45,7 +45,6 @@
                 "url": "User-image.php",
                 "method": "GET",
                 "success": function(res) {
-                    console.log(res);
                     var msg = JSON.parse(res);
                     if (msg.result == "Y") {
                         alert("你已登录！")
@@ -64,7 +63,7 @@
                     var message = JSON.parse(response.match(reg));
                     if (message.result == "Y") {
                         document.getElementById("client").reset();
-                        location.pathname = "/index.html";
+                        location.pathname = "index.html";
                     } else if(message.result == "N") {
                         resetCode();
                         if (message.msg == "验证码错误！") {

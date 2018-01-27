@@ -22,21 +22,25 @@
             </div>
         </div>
         <div class="container">
-            <div id="forum-title">
-                <div class="tbody">
-                    <div class="t1" title="标题1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"><a href="">标题1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</a></div><div class="t2"><a href="" class="t2-author">作者</a><span class="t2-time">时间</span></div>
+            <div id="top" class="forum-title">
+                <div class="title-body">
+                    <div class="t1" title="标题1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"><a href="">[置顶]标题1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</a></div><div class="t2"><a href="" class="t2-author" title="用户ID 123456">ID:123456</a><span class="t2-time">时间</span></div>
                 </div>
-                <div class="tbody">
+            </div>
+            <div id="forum-title" class="forum-title">
+                <!-- <div class="title-body">
                     <div class="t1" title="标题1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"><a href="">标题1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</a></div><div class="t2"><a href="" class="t2-author">作者</a><span class="t2-time">时间</span></div>
-                </div>
-                <div class="tbody">
-                    <div class="t1" title="标题1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"><a href="">标题1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</a></div><div class="t2"><a href="" class="t2-author">作者</a><span class="t2-time">时间</span></div>
-                </div>
+                </div> -->
+            </div>
+            <div id="page-area" class="page-body">
+                <!-- <a href=""><div class="page-button"><前一页</div></a>
+                <a href="forum.html?Page=1"><div class="page-button">1</div></a>
+                <a href=""><div class="page-button">后一页></div></a> -->
             </div>
             <div id="post-forum">
                 <div style="margin-bottom: 8px;">..:: 发贴 ::..</div>
                 <form method="POST" action="Forum-post.php" target="formTarget">
-                    <input type="text" name="Notename" class="post-title-input" placeholder="请填写标题">
+                    <input type="text" name="Notename" class="post-title-input" placeholder="请填写标题" maxlength="120">
                     <textarea name="Content" class="Content"></textarea>
                     <input type="submit" value="发表" class="sendButton">
                 </form>
@@ -67,11 +71,31 @@
                     } else if (msg.result == "Y") {
                         unlogin.style.display = "none";
                         avatar.src = msg.userphoto;
+                        username.innerHTML = msg.username
                     }
                 }
             });
         </script>
         <script src="js/forum.js"></script>
+        <script type="text/javascript">
+            (function() {
+                var parm = getParm();
+                var page = parm.Page || 1;
+                ajax({
+                    "url": "Loading.php",
+                    "method": "GET",
+                    "data": {
+                        "Page": page
+                    },
+                    "success": function(res) {
+                        var response = resToJson(res)
+                        console.log(response);
+                        setPageButton(pageNumMsg(page, response.pages));
+                        setTlitleNote(response.note)
+                    }
+                })
+            })();
+        </script>
         <iframe name="formTarget" id="formTarget" style="display: none;" onload="postres(this)"></iframe>
     </body>
 </html>

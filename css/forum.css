@@ -21,10 +21,10 @@ html,body {
     height: 42px;
     position: absolute;
     top: 0;
-    width: 90vw;
+    width: 90%;
     background-color: rgba(255, 255, 255, .4);
     line-height: 42px;
-    padding: 0 5vw;
+    padding: 0 5%;
     overflow: hidden;
 }
 .logo {
@@ -82,7 +82,7 @@ html,body {
     /*box-shadow: 0 0 5px -3px #000;*/
     /*background-color: #dceffe;*/
 }
-.tbody {
+.title-body {
     position: relative;
     display: inline-block;
     height: 50px;
@@ -90,17 +90,20 @@ html,body {
     border-bottom: 1px solid #e5e9ef;
     overflow: hidden;
 }
-.tbody:hover {
+.title-body:hover {
     box-shadow: 0 3px 3px #e5e9ef;
     z-index: 5;
 }
-.tbody a{
+.title-body a{
     color: #222;
     text-decoration: none;
 }
-#forum-title{
+.forum-title{
     padding: 3px;
     width: calc(100% - 6px);
+    background-color: #fff;
+    /*border-radius: 8px;*/
+    margin-top: 8px;
 }
 .t1 {
     padding: 6px;
@@ -112,6 +115,17 @@ html,body {
     font-weight: bold;
     word-break: break-all;
     border-right: solid 1px #e5e9ef;
+}
+.t1 a {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+#top .t1 a{
+    color: #f25d8e;
 }
 .t2 {
     position: absolute;
@@ -162,6 +176,7 @@ html,body {
     margin-top: 18px;
     background-color: #fff;
     overflow: hidden;
+    float: right;
 }
 .Content {
     display: inline-block;
@@ -202,10 +217,6 @@ html,body {
     border-color: #23ade5;
     background-color: #fff;
 }
-#forum-title {
-    background-color: #fff;
-    border-radius: 8px;
-}
 .sendButton{
     width: 70px;
     height: 32px;
@@ -222,4 +233,22 @@ html,body {
 #username {
     color: #fb7299;
     font-weight: bold;
+}
+.page-body {
+    display: inline-block;
+    background-color: #fff;
+    margin-top: 8px;
+    float: right;
+}
+.page-button {
+    height: 40px;
+    padding: 0 10px;
+    border: 1px solid #e5e9ef;
+    float: left;
+    line-height: 40px;
+    color: #666;
+}
+.page-button:hover {
+    border-color: #3e89fa;
+    color: #3e89fa;
 }

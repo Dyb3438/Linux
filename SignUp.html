@@ -112,7 +112,6 @@
                 "url": "User-image.php",
                 "method": "GET",
                 "success": function(res) {
-                    console.log(res);
                     var msg = JSON.parse(res);
                     if (msg.result == "Y") {
                         alert("你已登录！")
