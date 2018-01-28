@@ -5,10 +5,10 @@ function logOff() {
         "success": function(res) {
             var msg = JSON.parse(res);
             if (msg.result == "Y") {
-                location.pathname = "index.html";
+                location.reload();
             } else if (msg.result == "N") {
                 alert("可能你姿势不对，注销失败");
-                location.pathname = "index.html";
+                location.reload();
             }
         }
     })
@@ -19,11 +19,11 @@ function postres(t) {
     if (res != "") {
         var reg = /{.+}/;
         var msg = JSON.parse(res.match(reg));
+        console.log(msg);
         if (msg.result == "Y") {
-            location.pathname = "forum.html";
+            location.reload();
         } else if (msg.result == "N") {
-            location.pathname = "forum.html";
-            alert("受到神秘力量阻拦，发表失败");
+            alert("受到神秘力量阻拦，发送失败");
         }
     }
 }
@@ -76,9 +76,13 @@ function setPageButton(arr) {
         temp.push("<a href='forum.html?Page=" + (arr[2] - 1) + "'><div class='page-button'><前一页</div></a>");
     }
     for (var i = arr[0]; i <= arr[1]; i++) {
-        temp.push("<a href='forum.html?Page=" + i + "'><div class='page-button'>" + i + "</div></a>");
+        if (i == arr[2]) {
+            temp.push("<a href='javascript:void(0)'><div class='now-page-button'>" + i + "</div></a>");
+        } else {
+            temp.push("<a href='forum.html?Page=" + i + "'><div class='page-button'>" + i + "</div></a>");
+        }
     }
-    if (arr[1] < arr[3]) {
+    if (arr[2] < arr[3]) {
         temp.push("<a href='forum.html?Page=" + (arr[2] + 1) + "'><div class='page-button'>后一页></div></a>");
     }
     pageArea.innerHTML = temp.join("");
@@ -89,7 +93,7 @@ function setTlitleNote(obj) {
     var forumTitle = document.getElementById("forum-title");
     var temp = [];
     for (var key in obj) {
-        temp.push("<div class='title-body'><div class='t1' title='" + obj[key].notename + "'><a href='note.html?NoteId=" + obj[key].noteid + "'>" + obj[key].notename + "</a></div><div class='t2'><a href='author.html?userid=" + obj[key].userid + "' class='t2-author' title='用户ID " + obj[key].userid + "'>ID:" + obj[key].userid + "</a><span class='t2-time'>" + obj[key].time + "</span></div></div>")
+        temp.push("<div class='title-body'><div class='t1' title='" + obj[key].notename + "'><a href='note.html?NoteId=" + obj[key].noteid + "' target='_blank'>" + obj[key].notename + "</a></div><div class='t2'><a href='author.html?userid=" + obj[key].userid + "' class='t2-author' title='用户ID " + obj[key].userid + "'>ID:" + obj[key].userid + "</a><span class='t2-time'>" + obj[key].time + "</span></div></div>")
     }
     forumTitle.innerHTML = temp.join("");
 }
@@ -99,7 +103,19 @@ function setTlitleTop(obj) {
     var forumTitle = document.getElementById("top");
     var temp = [];
     for (var key in obj) {
-        temp.push("<div class='title-body'><div class='t1' title='" + obj[key].notename + "'><a href='note.html?NoteId=" + obj[key].noteid + "'>[置顶]" + obj[key].notename + "</a></div><div class='t2'><a href='author.html?userid=" + obj[key].userid + "' class='t2-author' title='用户ID " + obj[key].userid + "'>ID:" + obj[key].userid + "</a><span class='t2-time'>" + obj[key].time + "</span></div></div>")
+        temp.push("<div class='title-body'><div class='t1' title='" + obj[key].notename + "'><a href='note.html?NoteId=" + obj[key].noteid + "' target='_blank'>[置顶]" + obj[key].notename + "</a></div><div class='t2'><a href='author.html?userid=" + obj[key].userid + "' class='t2-author' title='用户ID " + obj[key].userid + "'>ID:" + obj[key].userid + "</a></div></div>")
     }
     forumTitle.innerHTML = temp.join("");
+}
+
+function reply(f) {
+    document.getElementById("Floor").value = f;
+    document.getElementById("quote").innerHTML = "（引用 " + f + "楼）";
+    document.getElementById("quoteButton").style.display = "inline-block";
+}
+
+function quotoCancel() {
+    document.getElementById("Floor").value = 0;
+    document.getElementById("quote").innerHTML = "";
+    document.getElementById("quoteButton").style.display = "none";
 }

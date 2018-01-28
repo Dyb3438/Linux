@@ -83,7 +83,7 @@ html,body {
     /*background-color: #dceffe;*/
 }
 .title-body {
-    position: relative;
+    /*position: relative;*/
     display: inline-block;
     height: 50px;
     width: 100%;
@@ -94,7 +94,7 @@ html,body {
     box-shadow: 0 3px 3px #e5e9ef;
     z-index: 5;
 }
-.title-body a{
+.title-body a, .t1 a{
     color: #222;
     text-decoration: none;
 }
@@ -126,6 +126,11 @@ html,body {
 }
 #top .t1 a{
     color: #f25d8e;
+}
+#tiezi .t1{
+    padding-right: 50px;
+    width: calc(100% - 100px);
+    border: none;
 }
 .t2 {
     position: absolute;
@@ -251,4 +256,120 @@ html,body {
 .page-button:hover {
     border-color: #3e89fa;
     color: #3e89fa;
+}
+.now-page-button {
+    height: 40px;
+    padding: 0 10px;
+    border: 1px solid #D2E9FB;
+    float: left;
+    line-height: 40px;
+    color: #3e89fa;
+    background-color: #D2E9FB;
+}
+.author-info {
+    display: none;
+    position: absolute;
+    left: 0;
+    bottom: 100%;
+    padding: 10px;
+    width: calc(100% - 20px);
+    border-bottom: 1px solid #ccc;
+    background-color: #fff;
+    z-index: 50;
+} /*帖子标题里把鼠标放在id上显示作者信息*/
+.t2-author:hover .author-info {
+    display: inline-block;
+}
+.author-info img {
+    height: 80px;
+    width: 80px;
+    border-radius: 10px;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+.floor {
+    border-bottom: 1px solid #E1E4E6;
+    display: inline-block;
+    width: 100%;
+    height: auto;
+    overflow:hidden;
+}
+.floor-author {
+    width: 130px;
+    float: left;
+    padding: 17px 0;
+    text-align: center;
+    float: left;
+}
+.floor-author img {
+    width: 80px;
+    height: 80px;
+    border: 1px solid #CCC;
+    padding: 3px;
+    background-color: #fff;
+}
+.floor-author a {
+    display: inline-block;
+    margin: 10px 0;
+    color: #2d64b3;
+    text-decoration: none;
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%
+}
+.floor-content {
+    width: calc(100% - 171px);
+    height: calc(100% - 28px);
+    padding: 20px 20px 8px 20px;
+    float: right;
+    border-left: 1px solid #E1E4E6;
+    min-height: 138px;
+}
+.floor-content-text {
+    min-height: 112px;
+    margin-bottom: 10px;
+}
+.floor-info {
+    display: inline-block;
+    float: right;
+    margin: 0 4px;
+    color: #999;
+    font-size: 12px;
+}
+.floor-content a {
+    text-decoration: none;
+    float: right;
+    color: #2d64b3;
+    margin-left: 4px;
+    font-size: 12px;
+}
+.quoter {
+    padding: 20px 20px 8px 20px;
+    background: #e5e9ef;
+    color: #10273f;
+    border-radius: 8px;
+}
+.quoter a {
+    color: #2d64b3;
+    text-decoration: none;
+    font-size: 12px;
+    float: left;
+}
+.quoter .floor-info {
+    float: left;
+}
+.blueButton{
+    width: 70px;
+    height: 32px;
+    border: none;
+    border-radius: 6px;
+    background-color: #00a1d6;
+    color: #fff;
+    font-size: 14px;
+    float: right;
+}
+.blueButton:hover {
+    background-color: #00b5e5;
 }
