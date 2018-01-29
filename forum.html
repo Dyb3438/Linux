@@ -52,8 +52,8 @@
             <div id="post-forum">
                 <div style="margin-bottom: 8px;">..:: 发贴 ::..</div>
                 <form method="POST" action="Forum-post.php" target="formTarget">
-                    <input type="text" name="Notename" class="post-title-input" placeholder="请填写标题" maxlength="120">
-                    <textarea name="Content" class="Content"></textarea>
+                    <input type="text" name="Notename" class="post-title-input" placeholder="请填写标题" maxlength="120" required="required">
+                    <textarea name="Content" class="Content" required="required"></textarea>
                     <input type="submit" value="发表" class="sendButton">
                 </form>
             </div>
@@ -100,7 +100,11 @@
                         "Page": page
                     },
                     "success": function(res) {
-                        var response = resToJson(res)
+                        var response = resToJson(res);
+                        if (response.result == "N") {
+                            document.write("404 NOT FOUND!");
+                            return;
+                        }
                         console.log(res);
                         setPageButton(pageNumMsg(page, response.pages));
                         setTlitleNote(response.note);
