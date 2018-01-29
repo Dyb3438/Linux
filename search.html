@@ -22,26 +22,9 @@
             </div>
         </div>
         <div class="container">
-            <div id="top" class="forum-title">
-                <div class="title-body">
-                    <div class="t1" title="标题1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111">
-                        <a href="note.html?NoteId=1">[置顶]标题1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</a>
-                    </div>
-                    <div class="t2">
-                        <a href="author.html?userid=123456" class="t2-author" title="用户ID 123456">
-                            ID:123456
-                            <div class="author-info">
-                                <img src="userphoto/root.png">
-                                加载中。。。
-                            </div>
-                        </a>
-                        <span class="t2-time">时间</span>
-                    </div>
-                </div>
-            </div>
             <div id="forum-title" class="forum-title">
                 <!-- <div class="title-body">
-                    <div class="t1" title="标题1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"><a href="note.html?NoteId=1">标题1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</a></div><div class="t2"><a href="author.html?userid=123456" class="t2-author">作者</a><span class="t2-time">时间</span></div>
+                    <div class="t1" title="标题1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"><a href="">标题1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</a></div><div class="t2"><a href="" class="t2-author">作者</a><span class="t2-time">时间</span></div>
                 </div> -->
             </div>
             <div id="page-area" class="page-body">
@@ -49,18 +32,8 @@
                 <a href="forum.html?Page=1"><div class="page-button">1</div></a>
                 <a href=""><div class="page-button">后一页></div></a> -->
             </div>
-            <div id="post-forum">
-                <div style="margin-bottom: 8px;">..:: 发贴 ::..</div>
-                <form method="POST" action="Forum-post.php" target="formTarget">
-                    <input type="text" name="Notename" class="post-title-input" placeholder="请填写标题" maxlength="120" required="required">
-                    <textarea name="Content" class="Content" required="required"></textarea>
-                    <input type="submit" value="发表" class="sendButton">
-                </form>
-            </div>
         </div>
         <div class="right-side" id="right-side">
-            <a href="#post-forum"><div class="right-side-button">发帖</div></a>
-            <a href="javascript:void(0)"><div class="right-side-button" onclick="location.reload()">刷新</div></a>
             <a href="#banner"><div class="right-side-button">TOP</div></a>
         </div>
         <script type="text/javascript" src="js/ajax.js"></script>
@@ -72,14 +45,10 @@
                     var unlogin = document.getElementById("unlogin");
                     var logined = document.getElementById("logined");
                     var avatar = document.getElementById("avatar");
-                    var rightPostButton = document.getElementById("right-side").children[0];
-                    var postForum = document.getElementById("post-forum");
                     var username = document.getElementById("username");
                     var msg = JSON.parse(res);
                     if (msg.result == "N") {
                         logined.style.display = "none";
-                        rightPostButton.style.display = "none";
-                        postForum.style.display = "none";
                     } else if (msg.result == "Y") {
                         unlogin.style.display = "none";
                         avatar.src = msg.userphoto;
@@ -93,25 +62,22 @@
             (function() {
                 var parm = getParm();
                 var page = parm.Page || 1;
+                var Search = parm.Search || 1;
                 ajax({
-                    "url": "Loading.php",
-                    "method": "GET",
+                    "url": "Search.php",
+                    "method": "POST",
                     "data": {
-                        "Page": page
+                        "Search": Search
                     },
                     "success": function(res) {
-                        var response = resToJson(res);
+                        var response = resToJson(res)
+                        console.log(response);
                         if (response.result == "N") {
-                            document.write("404 NOT FOUND!");
+                            document.getElementById("forum-title").innerHTML = "搜索无结果。";
                             return;
-                        }
-                        console.log(res);
-                        setPageButton(pageNumMsg(page, response.pages));
-                        setTlitleNote(response.note);
-                        if (page == 1) {
-                            setTlitleTop(response.top);
-                        } else {
-                            document.getElementById("top").style.display = "none";
+                        } else if (response.result == "Y") {
+                            // setPageButton(pageNumMsg(page, response.pages));
+                            setTlitleNote(response.search);
                         }
                     }
                 })

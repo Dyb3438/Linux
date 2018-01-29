@@ -169,3 +169,10 @@ function setNoteTitle(notename, noteid) {
     var tiezi = document.getElementById("tiezi");
     tiezi.innerHTML = "<div class='t1' title='" + notename + "'><a href='note.html?NoteId=" + noteid + "'>" + notename + "</a></div>";
 }
+
+function search(e, s) {
+    //s为搜索关键词
+    if (e.keyCode == 13 && s != "") {
+        location.href = "search.html?Search=" + s;
+    }
+}
