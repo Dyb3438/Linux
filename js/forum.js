@@ -88,6 +88,26 @@ function setPageButton(arr) {
     pageArea.innerHTML = temp.join("");
 }
 
+function setPageButtonInNote(arr, noteid) {
+    //arr为pageNumMsg返回的数组
+    var pageArea = document.getElementById("page-area");
+    var temp = [];
+    if (arr[0] < arr[2]) {
+        temp.push("<a href='note.html?NoteId=" + noteid + "&Page=" + (arr[2] - 1) + "'><div class='page-button'><前一页</div></a>");
+    }
+    for (var i = arr[0]; i <= arr[1]; i++) {
+        if (i == arr[2]) {
+            temp.push("<a href='javascript:void(0)'><div class='now-page-button'>" + i + "</div></a>");
+        } else {
+            temp.push("<a href='note.html?NoteId=" + noteid + "&Page=" + i + "'><div class='page-button'>" + i + "</div></a>");
+        }
+    }
+    if (arr[2] < arr[3]) {
+        temp.push("<a href='note.html?NoteId=" + noteid + "&Page=" + (arr[2] + 1) + "'><div class='page-button'>后一页></div></a>");
+    }
+    pageArea.innerHTML = temp.join("");
+}
+
 function setTlitleNote(obj) {
     //obj为返回数据中的note
     var forumTitle = document.getElementById("forum-title");
@@ -118,4 +138,34 @@ function quotoCancel() {
     document.getElementById("Floor").value = 0;
     document.getElementById("quote").innerHTML = "";
     document.getElementById("quoteButton").style.display = "none";
+}
+
+function loadNoteFloor(obj) {
+    //obj为返回数据中的floor
+    var floor = document.getElementById("floor");
+    var temp = [];
+    for (var key in obj) {
+        if (obj[key].quoter != "0") {
+            temp.push(setFloor(obj[key], key, setQuoter(obj[key].quoter)));
+        } else if (obj[key].quoter == "0") {
+            temp.push(setFloor(obj[key], key));
+        }
+    }
+    floor.innerHTML = temp.join("");
+}
+
+function setQuoter(quoter) {
+    var quote = "<div class='quoter'><div class='floor-info'>引用 " + quoter.quoterid + "楼 </div><a href='author.html?userid=" + quoter.userid + "' title='用户ID " + quoter.userid + "'>" + quoter.username + "</a><div class='floor-info'> " + quoter.time + "</div><br><br>" + quoter.content + "</div><br>";
+    return quote;
+}
+
+function setFloor(obj, key, quoter) {
+    var temp = quoter || "";
+    var floor = "<div class='floor'><div class='floor-author'><img src='" + obj.userphoto + "'><a href='author.html?userid=" + obj.userid + "' title='用户ID " + obj.userid + "'>" + obj.username + "</a></div><div class='floor-content'><div class='floor-content-text'>" + temp + obj.content + "</div><a href='#post-forum' onclick='reply(" + key + ")'>回复</a><div class='floor-info'>" + key + "楼 " + obj.time + "</div></div></div>";
+    return floor;
+}
+
+function setNoteTitle(notename, noteid) {
+    var tiezi = document.getElementById("tiezi");
+    tiezi.innerHTML = "<div class='t1' title='" + notename + "'><a href='note.html?NoteId=" + noteid + "'>" + notename + "</a></div>";
 }
