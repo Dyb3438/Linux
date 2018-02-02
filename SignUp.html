@@ -91,16 +91,51 @@
                         <div class="check" style="display: none;">×</div>
                         <img id="code" src="code.php" class="code" onclick="this.src='code.php?p'+Math.random()">
                     </div>
-                    <button class="loadAvatarButton" onsubmit="return false" type="button" onclick="toBack()">选择上传头像</button>
+                    <button class="loadAvatarButton" onsubmit="return false" type="button" onclick="toAvatar()">选择上传头像</button>
+                    <button class="loadAvatarButton" onsubmit="return false" type="button" onclick="toBack()" style="margin-top: 0;">完善个人信息</button>
                     <input type="submit" class="submit" style="margin-top: 0;" value="立即注册">
                 </div>
-                <div id="back" style="display: none;">
+                <div id="avatar" style="display: none;">
                     <a href="javascript:void(0)" class="fileButton">
                         <input class="file" type="file" name="UserPhoto" accept="image/*" onchange="preview(this)">
                         <img src="userphoto/root.png" alt="" class="previewArea">
                     </a>
                     <br>
                     单击图片上传
+                    <button class="loadAvatarButton" onsubmit="return false" type="button" onclick="toFront()">返回</button>
+                </div>
+                <div id="back" style="display: none;">
+                    <div class="inputArea">
+                        <select name="Sex" class="sign-input">
+                            <option>性别未知</option>
+                            <option value="1">男</option>
+                            <option value="0">女</option>
+                        </select>
+                    </div>
+                    <div class="inputArea">
+                        <input type="date" name="Birth" class="sign-input" placeholder="生日" onfocus="initInfo(this);seeInf(this)" onblur="initInfo(this)">
+                        <div class="information slideup">
+                            <div class="information">请填写生日</div>
+                        </div>
+                        <div class="information warn slideup">一般你不会看到这东西的</div>
+                        <div class="check" style="display: none;">×</div>
+                    </div>
+                    <div class="inputArea">
+                        <input type="text" name="QQ" id="QQ" class="sign-input" placeholder="QQ" onfocus="initInfo(this);seeInf(this)" onblur="initInfo(this);checkQQ(this)" status="1">
+                        <div class="information slideup">
+                            <div class="information">请填写正确的QQ格式</div>
+                        </div>
+                        <div class="information warn slideup">QQ格式不正确</div>
+                        <div class="check" style="display: none;">×</div>
+                    </div>
+                    <div class="inputArea">
+                        <input type="text" name="Email" id="Email" class="sign-input" placeholder="邮箱" onfocus="initInfo(this);seeInf(this)" onblur="initInfo(this);checkEmail(this)" status="1">
+                        <div class="information slideup">
+                            <div class="information">请填写正确的邮箱格式</div>
+                        </div>
+                        <div class="information warn slideup">邮箱格式不正确</div>
+                        <div class="check" style="display: none;">×</div>
+                    </div>
                     <button class="loadAvatarButton" onsubmit="return false" type="button" onclick="toFront()">返回</button>
                 </div>
             </form>
@@ -153,11 +188,18 @@
             }
             function toBack() {
                 document.getElementById("front").style.display = "none";
+                document.getElementById("avatar").style.display = "none";
                 document.getElementById("back").style.display = "inline-block";
             }
             function toFront() {
                 document.getElementById("back").style.display = "none";
+                document.getElementById("avatar").style.display = "none";
                 document.getElementById("front").style.display = "inline-block";
+            }
+            function toAvatar() {
+                document.getElementById("back").style.display = "none";
+                document.getElementById("front").style.display = "none";
+                document.getElementById("avatar").style.display = "inline-block";
             }
             function checkUserId(element) {
                 var id = element.value;
@@ -248,6 +290,32 @@
                     inputErr(element);
                 }
             }
+            function checkQQ(element) {
+                var QQ = element.value;
+                var reg = /^\d+$/;
+                if (QQ == "") {
+                    initInfo(element);
+                    element.setAttribute("status", "1");
+                    return;
+                } else if (reg.test(QQ)) {
+                    inputRight(element);
+                } else {
+                    inputErr(element);
+                }
+            }
+            function checkEmail(element) {
+                var Email = element.value;
+                var reg = /^\S+@\w+\.\w+$/;
+                if (Email == "") {
+                    initInfo(element);
+                    element.setAttribute("status", "1");
+                    return;
+                } else if (reg.test(Email)) {
+                    inputRight(element);
+                } else {
+                    inputErr(element);
+                }
+            }
             function check() {
                 if (document.getElementById("UserId").getAttribute("status") != "1") {
                     location.hash = "#UserId";
@@ -260,12 +328,17 @@
                 if (document.getElementById("UserPassword").getAttribute("status") != "1") {
                     location.hash = "#UserPassword";
                     return false;
+                }
+                if (document.getElementById("QQ").getAttribute("status") != "1" || document.getElementById("Email").getAttribute("status") != "1") {
+                    toBack();
+                    return false;
                 } else {
                     return true;
                 }
             }
             function applyCheck(iframe) {
                 var response = iframe.contentDocument.getElementsByTagName("body")[0].innerHTML;
+                console.log(response);
                 if (response != "") {
                     var reg = /{.+}/;
                     var message = JSON.parse(response.match(reg));

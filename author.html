@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="UTF-8">
+        <title>用户信息</title>
+        <link rel="stylesheet" type="text/css" href="css/author.css">
+    </head>
+    <body onselectstart="return false;">
+        <div class="background"></div>
+        <div class="menu">
+            <a href="index.html"><div class="logo"></div></a>
+            <input type="text" name="search" class="search" placeholder="搜索" formaction="" onkeyup="search(event, this.value)">
+            <div id="logined">
+                <a href="javascript:void(0)"><div class="menu-button" onclick="logOff()">注销</div></a>
+                <a href="javascript:void(0)"><div class="menu-button" id="username"></div></a>
+                <a href="javascript:void(0)"><img src="userphoto/root.png" class="menu-avatar" id="avatar"></a>
+            </div>
+            <div id="unlogin">
+                <a href="SignUp.html"><div class="menu-button">注册</div></a>
+                <a href="LogIn.html"><div class="menu-button">登录</div></a>
+            </div>
+        </div>
+        <div class="container">
+            <div class="inner-head">
+                <img src="userphoto/root.png" id="head-avatar">
+                <div class="head-info">
+                    <div id="head-name">master</div>
+                    <div id="head-identity">版主</div>
+                </div>
+            </div>
+            <div class="inner-body">
+                <div class="inner-body-left">
+                    <a href="javascript:void(0)" id="info"><div class="left-list">· 个人信息</div></a>
+                    <a href="javascript:void(0)" id="follow"><div class="left-list">· 关注</div></a>
+                    <a href="javascript:void(0)" id="dynamic"><div class="left-list">· 动态</div></a>
+                    <a href="javascript:void(0)" id="record"><div class="left-list">· 发贴记录</div></a>
+                    <a href="javascript:void(0)" id="chat"><div class="left-list">· 聊天</div></a>
+                </div>
+                <div id="inner-body-right">
+                    <div class="right-container">ID：123456<br><br>昵称：master<br><br>身份：版主<br><br>性别：男<br><br>生日：1999-02-05<br><br>QQ：851695673<br><br>电子邮箱：hikariHui@outlook.com<br><br><button class="blueButton">修改个人信息</button></div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="js/ajax.js"></script>
+        <script type="text/javascript" src="js/forum.js"></script>
+        <script type="text/javascript" src="js/author.js"></script>
+        <script type="text/javascript">
+            ajax({
+                "url": "User-image.php",
+                "method": "GET",
+                "success": function(res) {
+                    var parm = getParm();
+                    var unlogin = document.getElementById("unlogin");
+                    var logined = document.getElementById("logined");
+                    var avatar = document.getElementById("avatar");
+                    var postForum = document.getElementById("post-forum");
+                    var username = document.getElementById("username");
+                    var msg = JSON.parse(res);
+                    if (msg.result == "N") {
+                        logined.style.display = "none";
+                        rightPostButton.style.display = "none";
+                        postForum.style.display = "none";
+                        others(parm.userid);
+                    } else if (msg.result == "Y") {
+                        unlogin.style.display = "none";
+                        avatar.src = msg.userphoto;
+                        avatar.parentNode.href = "author.html?userid=" + msg.userid;
+                        username.innerHTML = msg.username;
+                        username.parentNode.href = "author.html?userid=" + msg.userid;
+                        if (parm.userid == msg.userid) {
+                            myself(msg.userid);
+                        } else {
+                            others(parm.userid);
+                        }
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>

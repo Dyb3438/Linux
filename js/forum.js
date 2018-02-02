@@ -146,22 +146,22 @@ function loadNoteFloor(obj) {
     var temp = [];
     for (var key in obj) {
         if (obj[key].quoter != "0") {
-            temp.push(setFloor(obj[key], key, setQuoter(obj[key].quoter)));
+            temp.push(setFloor(obj[key], setQuoter(obj[key].quoter)));
         } else if (obj[key].quoter == "0") {
-            temp.push(setFloor(obj[key], key));
+            temp.push(setFloor(obj[key]));
         }
     }
     floor.innerHTML = temp.join("");
 }
 
 function setQuoter(quoter) {
-    var quote = "<div class='quoter'><div class='floor-info'>引用 " + quoter.quoterid + "楼 </div><a href='author.html?userid=" + quoter.userid + "' title='用户ID " + quoter.userid + "'>" + quoter.username + "</a><div class='floor-info'> " + quoter.time + "</div><br><br>" + quoter.content + "</div><br>";
+    var quote = "<div class='quoter'><div class='floor-info'>引用 " + quoter.quoterid + "楼 </div><a href='author.html?userid=" + quoter.userid + "' target='_blank' title='用户ID " + quoter.userid + "'>" + quoter.username + "</a><div class='floor-info'> " + quoter.time + "</div><br><br>" + quoter.content + "</div><br>";
     return quote;
 }
 
-function setFloor(obj, key, quoter) {
+function setFloor(obj, quoter) {
     var temp = quoter || "";
-    var floor = "<div class='floor'><div class='floor-author'><img src='" + obj.userphoto + "'><a href='author.html?userid=" + obj.userid + "' title='用户ID " + obj.userid + "'>" + obj.username + "</a></div><div class='floor-content'><div class='floor-content-text'>" + temp + obj.content + "</div><a href='#post-forum' onclick='reply(" + key + ")'>回复</a><div class='floor-info'>" + key + "楼 " + obj.time + "</div></div></div>";
+    var floor = "<div class='floor'><div class='floor-author'><img src='" + obj.userphoto + "'><a href='author.html?userid=" + obj.userid + "' target='_blank' title='用户ID " + obj.userid + "'>" + obj.username + "</a></div><div class='floor-content'><div class='floor-content-text'>" + temp + obj.content + "</div><a href='#post-forum' onclick='reply(" + obj.floor + ")'>回复</a><div class='floor-info'>" + obj.floor + "楼 " + obj.time + "</div></div></div>";
     return floor;
 }
 

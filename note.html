@@ -13,8 +13,8 @@
             <input type="text" name="search" class="search" placeholder="搜索" formaction="" onkeyup="search(event, this.value)">
             <div id="logined">
                 <a href="javascript:void(0)"><div class="menu-button" onclick="logOff()">注销</div></a>
-                <a href="javascript:void(0)"><div class="menu-button" id="username"></div></a>
-                <a href=""><img src="userphoto/root.png" class="menu-avatar" id="avatar"></a>
+                <a href="javascript:void(0)" target="_blank"><div class="menu-button" id="username"></div></a>
+                <a href=javascript:void(0)"" target="_blank"><img src="userphoto/root.png" class="menu-avatar" id="avatar"></a>
             </div>
             <div id="unlogin">
                 <a href="SignUp.html"><div class="menu-button">注册</div></a>
@@ -31,7 +31,7 @@
                 <div class="floor">
                     <div class="floor-author">
                         <img src="userphoto/root.png">
-                        <a href="author.html?userid=123456" title="用户ID 123456">master</a>
+                        <a href="author.html?userid=123456" title="用户ID 123456" target="_blank">master</a>
                     </div>
                     <div class="floor-content">
                         <div class="floor-content-text">1231321313</div>
@@ -42,12 +42,12 @@
                 <div class="floor">
                     <div class="floor-author">
                         <img src="userphoto/root.png">
-                        <a href="author.html?userid=123456" title="用户ID 123456">master</a>
+                        <a href="author.html?userid=123456" title="用户ID 123456" target="_blank">master</a>
                     </div>
                     <div class="floor-content">
                         <div class="floor-content-text">
                             <div class="quoter">
-                                <div class="floor-info">引用 1楼 </div><a href="author.html?userid=123456" title="用户ID 123456">master</a><div class="floor-info"> 2018-01-28 20:09</div>
+                                <div class="floor-info">引用 1楼 </div><a href="author.html?userid=123456" title="用户ID 123456" target="_blank">master</a><div class="floor-info"> 2018-01-28 20:09</div>
                                 <br>
                                 <br>
                                 1231321313
@@ -102,7 +102,9 @@
                     } else if (msg.result == "Y") {
                         unlogin.style.display = "none";
                         avatar.src = msg.userphoto;
-                        username.innerHTML = msg.username
+                        avatar.parentNode.href = "author.html?userid=" + msg.userid;
+                        username.innerHTML = msg.username;
+                        username.parentNode.href = "author.html?userid=" + msg.userid;
                     }
                 }
             });
@@ -128,6 +130,7 @@
                             return;
                         }
                         console.log(response);
+                        document.getElementsByTagName("title")[0].innerHTML = response.notename;
                         setNoteTitle(response.notename, noteid);
                         loadNoteFloor(response.floor);
                         setPageButtonInNote(pageNumMsg(page, response.pages), noteid);

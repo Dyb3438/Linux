@@ -2,7 +2,7 @@
 <html lang="zh-cmn-Hans">
     <head>
         <meta charset="UTF-8">
-        <title></title>
+        <title>Mo蛤论坛</title>
         <link rel="stylesheet" type="text/css" href="css/forum.css">
         <style type="text/css"></style>
     </head>
@@ -13,8 +13,8 @@
             <input type="text" name="search" class="search" placeholder="搜索" formaction="" onkeyup="search(event, this.value)">
             <div id="logined">
                 <a href="javascript:void(0)"><div class="menu-button" onclick="logOff()">注销</div></a>
-                <a href="javascript:void(0)"><div class="menu-button" id="username"></div></a>
-                <a href=""><img src="userphoto/root.png" class="menu-avatar" id="avatar"></a>
+                <a href="javascript:void(0)" target="_blank"><div class="menu-button" id="username"></div></a>
+                <a href="javascript:void(0)" target="_blank"><img src="userphoto/root.png" class="menu-avatar" id="avatar"></a>
             </div>
             <div id="unlogin">
                 <a href="SignUp.html"><div class="menu-button">注册</div></a>
@@ -83,7 +83,9 @@
                     } else if (msg.result == "Y") {
                         unlogin.style.display = "none";
                         avatar.src = msg.userphoto;
-                        username.innerHTML = msg.username
+                        avatar.parentNode.href = "author.html?userid=" + msg.userid;
+                        username.innerHTML = msg.username;
+                        username.parentNode.href = "author.html?userid=" + msg.userid;
                     }
                 }
             });
