@@ -37,7 +37,7 @@
                     <a href="javascript:void(0)" id="chat"><div class="left-list">· 聊天</div></a>
                 </div>
                 <div id="inner-body-right">
-                    <div class="right-container">ID：123456<br><br>昵称：master<br><br>身份：版主<br><br>性别：男<br><br>生日：1999-02-05<br><br>QQ：851695673<br><br>电子邮箱：hikariHui@outlook.com<br><br><button class="blueButton">修改个人信息</button></div>
+                    <!-- <div class="right-container">ID：123456<br><br>昵称：master<br><br>身份：版主<br><br>性别：男<br><br>生日：1999-02-05<br><br>QQ：851695673<br><br>电子邮箱：hikariHui@outlook.com<br><br><button class="blueButton" onclick="location.href='modify.html'">修改个人信息</button></div> -->
                 </div>
             </div>
         </div>
@@ -50,6 +50,7 @@
                 "method": "GET",
                 "success": function(res) {
                     var parm = getParm();
+                    parm.userid = parm.userid || 0;
                     var unlogin = document.getElementById("unlogin");
                     var logined = document.getElementById("logined");
                     var avatar = document.getElementById("avatar");
@@ -58,8 +59,6 @@
                     var msg = JSON.parse(res);
                     if (msg.result == "N") {
                         logined.style.display = "none";
-                        rightPostButton.style.display = "none";
-                        postForum.style.display = "none";
                         others(parm.userid);
                     } else if (msg.result == "Y") {
                         unlogin.style.display = "none";

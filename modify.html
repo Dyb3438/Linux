@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="UTF-8">
+        <title>修改个人信息</title>
+        <link rel="stylesheet" type="text/css" href="css/sign.css">
+        <style type="text/css">
+            .loadAvatarButton {
+                border: 1px #3083ff solid;
+                border-radius: 4px;
+                background-color: #fff;
+                box-shadow: 0 5px 8px 0 rgba(24,95,255,.1);
+                color: #3487ff;
+                width: 300px;
+                height: 40px;
+                margin-top: 35px;
+                margin-bottom: 8px;
+                font-size: 16px;
+            }
+            .loadAvatarButton:hover {
+                color: #3580eb;
+            }
+            .file {
+                width: 200px;
+                height: 200px;
+                opacity: 0;
+                left: 0;
+                position: absolute;
+                /*font-size: 100px;*/
+            }
+            .previewArea {
+                width: 200px;
+                height: 200px;
+            }
+            .fileButton {
+                width: 200px;
+                height: 200px;
+                position: relative;
+                display: inline-block;
+            }
+        </style>
+    </head>
+    <body onselectstart="return false;">
+        <div id="background-slideshow">
+            <div class="slideshow"></div>
+            <div class="slideshow"></div>
+        </div>
+        <div class="container">
+            <a href="javascript:void(0)"><div class="title">MODIFY</div></a>
+            <form name="apply" id="apply" action="modify_image.php" method="POST" target="formTarget" enctype="multipart/form-data">
+                <div id="front" style="display: inline-block;">
+                    <div class="inputArea">
+                        <input type="hidden" name="UserId" id="UserId">
+                    </div>
+                    <div class="inputArea">
+                        <input type="text" name="UserName" id="UserName" class="sign-input" placeholder="昵称" required="required" maxlength="24" onfocus="initInfo(this);seeInf(this)" onblur="initInfo(this);checkUserName(this)">
+                        <div class="information slideup">
+                            <div class="information">不能超过24个字符或12个汉字</div>
+                        </div>
+                        <div class="information warn slideup">你不能使用该昵称</div>
+                        <div class="check" style="display: none;">×</div>
+                    </div>
+                    <div class="inputArea">
+                        <select name="Sex" class="sign-input">
+                            <option>性别未知</option>
+                            <option value="1" id="boy">男</option>
+                            <option value="0" id="girl">女</option>
+                        </select>
+                    </div>
+                    <div class="inputArea">
+                        <input type="date" name="Birth" id="Birth" class="sign-input" placeholder="生日" onfocus="initInfo(this);seeInf(this)" onblur="initInfo(this)">
+                        <div class="information slideup">
+                            <div class="information">请填写生日</div>
+                        </div>
+                        <div class="information warn slideup">一般你不会看到这东西的</div>
+                        <div class="check" style="display: none;">×</div>
+                    </div>
+                    <div class="inputArea">
+                        <input type="text" name="QQ" id="QQ" class="sign-input" placeholder="QQ" onfocus="initInfo(this);seeInf(this)" onblur="initInfo(this);checkQQ(this)" status="1">
+                        <div class="information slideup">
+                            <div class="information">请填写正确的QQ格式</div>
+                        </div>
+                        <div class="information warn slideup">QQ格式不正确</div>
+                        <div class="check" style="display: none;">×</div>
+                    </div>
+                    <div class="inputArea">
+                        <input type="text" name="Email" id="Email" class="sign-input" placeholder="邮箱" onfocus="initInfo(this);seeInf(this)" onblur="initInfo(this);checkEmail(this)" status="1">
+                        <div class="information slideup">
+                            <div class="information">请填写正确的邮箱格式</div>
+                        </div>
+                        <div class="information warn slideup">邮箱格式不正确</div>
+                        <div class="check" style="display: none;">×</div>
+                    </div>
+                    <div class="inputArea">
+                        <input type="text" name="Number" id="Number" class="sign-input" placeholder="序列号" onfocus="initInfo(this);seeInf(this)" onblur="initInfo(this)">
+                        <div class="information slideup">
+                            <div class="information">有就填，没有就无视</div>
+                        </div>
+                        <div class="information warn slideup">序列号不正确</div>
+                        <div class="check" style="display: none;">×</div>
+                    </div>
+                    <button class="loadAvatarButton" onsubmit="return false" type="button" onclick="toAvatar()">选择上传头像</button>
+                    <input type="submit" class="submit" style="margin-top: 0;" value="完成修改">
+                </div>
+                <div id="avatar" style="display: none;">
+                    <a href="javascript:void(0)" class="fileButton">
+                        <input class="file" type="file" name="UserPhoto" accept="image/*" onchange="preview(this)">
+                        <img src="userphoto/root.png" alt="" class="previewArea" id="previewArea">
+                    </a>
+                    <br>
+                    单击图片上传
+                    <button class="loadAvatarButton" onsubmit="return false" type="button" onclick="toFront()">返回</button>
+                </div>
+            </form>
+            <a href="javascript:void(0)" class="link" onclick="history.back()">返回个人信息</a>
+        </div>
+        <script type="text/javascript" src="js/ajax.js"></script>
+        <script type="text/javascript">
+            ajax({
+                "url": "User-image.php",
+                "method": "GET",
+                "success": function(res) {
+                    var msg = JSON.parse(res);
+                    if (msg.result == "Y") {
+                        document.getElementById("UserId").value = msg.userid;
+                        ajax({
+                            "url": "Image.php",
+                            "method": "GET",
+                            "data": {
+                                "Userid": msg.userid
+                            },
+                            "success": function(res) {
+                                var response = resToJson(res);
+                                var UserName = document.getElementById("UserName");
+                                UserName.value = response.username;
+                                UserName.setAttribute("oldname", response.username)
+                                document.getElementById("previewArea").src = response.userphoto;
+                                if (response.sex == "男") {
+                                    document.getElementById("boy").setAttribute("selected", "selected");
+                                } else if (response.sex == "女") {
+                                    document.getElementById("girl").setAttribute("selected", "selected");
+                                }
+                                if (response.birth != "未填写") {
+                                    document.getElementById("Birth").value = response.birth;
+                                }
+                                if (response.email != "未填写") {
+                                    document.getElementById("Email").value = response.email;
+                                }
+                                if (response.QQ != "未填写") {
+                                    document.getElementById("QQ").value = response.QQ;
+                                }
+
+                                if (response.identity == "群众") {
+                                    document.getElementById("Number").style.display = "inline-block";
+                                }
+                            }
+                        })
+                    } else if (msg.result == "N") {
+                        alert("请先登陆！");
+                        location.href = "LogIn.html";
+                    }
+                }
+            });
+        </script>
+        <script src="js/background-image.js"></script>
+        <script type="text/javascript" src="js/sign.js"></script>
+        <script type="text/javascript">
+            function preview(element) {
+                var previewArea = element.nextElementSibling;
+                if (typeof FileReader == "undefined") {
+                    previewArea.src = "";
+                    previewArea.alt = "你的浏览器不支持预览";
+                    return;
+                }
+                if (element.files[0]) {
+                    if (element.files[0].size > 5248000) {
+                        alert("图片太大，请重新选择");
+                        element.value = "";
+                        previewArea.src = "userphoto/root.png";
+                        return;
+                    }
+                    var typeTest = /image\/\w+/;
+                    if (typeTest.test(element.files[0].type)) {
+                        var file = element.files[0];
+                        var reader = new FileReader();
+                        reader.readAsDataURL(file);
+                        reader.onload = function() {
+                            previewArea.src = this.result;
+                        }
+                    } else {
+                        previewArea.src = "";
+                        previewArea.alt = "你打开的不是一个图片";
+                    }
+                }
+            }
+            function toFront() {
+                document.getElementById("avatar").style.display = "none";
+                document.getElementById("front").style.display = "inline-block";
+            }
+            function toAvatar() {
+                document.getElementById("front").style.display = "none";
+                document.getElementById("avatar").style.display = "inline-block";
+            }
+            function checkUserName(element) {
+                var reg = /\s/;
+                var name = element.value;
+                if (reg.test(name)) {
+                    check.innerHTML = "昵称中含有空白字符";
+                    return;
+                }
+                var reg1 = /[^\u4e00-\u9fa5\s]/g;
+                var reg2 = /[\u4e00-\u9fa5]/g;
+                var arr1 = name.match(reg1)||[];
+                var arr2 = name.match(reg2)||[];
+                var length = arr1.length + (arr2.length * 2);
+                if (length > 24) {
+                    inputErr(element);
+                    return;
+                }
+                if (name != "") {
+                    if (name == element.getAttribute("oldname")) {
+                        initInfo(element);
+                        inputRight(element);
+                        return;
+                    }
+                    ajax({
+                        "url": "Check.php",
+                        "data": {
+                            "UserName": name
+                        },
+                        "success": function(response) {
+                            message = JSON.parse(response);
+                            switch (message.result) {
+                                case "Y":
+                                    inputRight(element);
+                                    break;
+                                case "N":
+                                    inputErr(element);
+                                    break;
+                            }
+                        }
+                    });
+                } else {
+                    initInfo(element);
+                }
+            }
+            function checkQQ(element) {
+                var QQ = element.value;
+                var reg = /^\d+$/;
+                if (QQ == "") {
+                    initInfo(element);
+                    return;
+                } else if (reg.test(QQ)) {
+                    inputRight(element);
+                } else {
+                    inputErr(element);
+                }
+            }
+            function checkEmail(element) {
+                var Email = element.value;
+                var reg = /^\S+@\w+\.\w+$/;
+                if (Email == "") {
+                    initInfo(element);
+                    return;
+                } else if (reg.test(Email)) {
+                    inputRight(element);
+                } else {
+                    inputErr(element);
+                }
+            }
+            function modifyCheck(iframe) {
+                var response = iframe.contentDocument.getElementsByTagName("body")[0].innerHTML;
+                console.log(response);
+                if (response != "") {
+                    var reg = /{.+}/;
+                    var message = JSON.parse(response.match(reg));
+                    console.log(message);
+                    if (message.result == "Y") {
+                        alert("修改成功");
+                        document.getElementById("apply").reset();
+                        history.back();
+                    } else if(message.result == "N") {
+                        resetCode();
+                        if (message.msg == "修改错误") {
+                            inputErr(document.getElementById('Code'));
+                        } else {
+                            alert("可能是你姿势不对，修改失败了");
+                        }
+                    }
+                }
+            }
+        </script>
+        <iframe name="formTarget" id="formTarget" style="display: none;" onload="modifyCheck(this)"></iframe>
+    </body>
+</html>
