@@ -281,11 +281,7 @@
                         history.back();
                     } else if(message.result == "N") {
                         resetCode();
-                        if (message.msg == "修改错误") {
-                            inputErr(document.getElementById('Code'));
-                        } else {
-                            alert("可能是你姿势不对，修改失败了");
-                        }
+                        alert("可能是你姿势不对，修改失败了");
                     }
                 }
             }

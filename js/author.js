@@ -52,7 +52,7 @@ function myInfo(id) {
         },
         "success": function(res) {
             var response = resToJson(res);
-            container.innerHTML = "<div class='right-container'>ID：" + response.userid + "<br><br>昵称：" + response.username + "<br><br>身份：" + response.identity + "<br><br>性别：" + response.sex + "<br><br>生日：" + response.birth + "<br><br>QQ：" + response.QQ + "<br><br>电子邮箱：" + response.email + "<br><br><button class='blueButton' onclick=\"location.href=\'modify.html\'\">修改个人信息</button></div>";
+            container.innerHTML = "<div class='right-container'>ID：" + response.userid + "<br><br>昵称：" + response.username + "<br><br>身份：" + response.identity + "<br><br>性别：" + response.sex + "<br><br>生日：" + response.birth + "<br><br>QQ：" + response.QQ + "<br><br>电子邮箱：" + response.email + "<br><br><button class='blueButton modify-button' onclick='modify()'>修改密码</button><br><br><button class='blueButton modify-button' onclick=\"location.href=\'modify.html\'\">修改个人信息</button></div>";
         }
     })
 }
@@ -71,4 +71,12 @@ function otherInfo(id) {
             container.innerHTML = "<div class='right-container'>ID：" + response.userid + "<br><br>昵称：" + response.username + "<br><br>身份：" + response.identity + "<br><br>性别：" + response.sex + "<br><br>生日：" + response.birth + "<br><br>QQ：" + response.QQ + "<br><br>电子邮箱：" + response.email + "</div>";
         }
     })
+}
+
+function modify() {
+    var iframe = document.getElementById("modifyPassword");
+    var background = document.getElementById("background-gray");
+    background.style.display = "block";
+    iframe.src = "modifyPassword.html";
+    iframe.style.display = "block";
 }
