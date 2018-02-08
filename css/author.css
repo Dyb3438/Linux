@@ -167,6 +167,7 @@ a {
     background-color: #00a1d6;
     color: #fff;
     font-size: 14px;
+    float: none;
 }
 .modify-button {
     width: 100px;

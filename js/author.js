@@ -1,7 +1,16 @@
+function initColor() {
+    document.getElementById("info").firstChild.style.color = "";
+    document.getElementById("follow").firstChild.style.color = "";
+    document.getElementById("dynamic").firstChild.style.color = "";
+    document.getElementById("record").firstChild.style.color = "";
+}
 function myself(id) {
     setInfo(id);
     document.getElementById("info").onclick = function() {
         myInfo(id);
+    };
+    document.getElementById("record").onclick = function() {
+        historyPost(id);
     };
     myInfo(id);
 }
@@ -13,6 +22,9 @@ function others(id) {
     chat.style.display = "none";
     document.getElementById("info").onclick = function() {
         otherInfo(id);
+    };
+    document.getElementById("record").onclick = function() {
+        historyPost(id);
     };
     setInfo(id);
     otherInfo(id);
@@ -43,6 +55,7 @@ function setInfo(id) {
 
 function myInfo(id) {
     var container = document.getElementById("inner-body-right");
+    initColor();
     document.getElementById("info").firstChild.style.color = "#fb7299";
     ajax({
         "url": "Image.php",
@@ -59,6 +72,7 @@ function myInfo(id) {
 
 function otherInfo(id) {
     var container = document.getElementById("inner-body-right");
+    initColor();
     document.getElementById("info").firstChild.style.color = "#fb7299";
     ajax({
         "url": "Image.php",
@@ -79,4 +93,31 @@ function modify() {
     background.style.display = "block";
     iframe.src = "modifyPassword.html";
     iframe.style.display = "block";
+}
+
+function historyPost(id){
+    document.getElementById("inner-body-right").innerHTML = "<div class='right-container'></div>";
+    initColor();
+    document.getElementById("record").firstChild.style.color = "#fb7299";
+    ajax({
+        "url": "History-post.php",
+        "method": "GET",
+        "data": {
+            "Userid": id
+        },
+        "success": function(res) {
+            var response = resToJson(res);
+            setTlitleNote(response.note);
+        }
+    })
+}
+
+function setTlitleNote(obj) {
+    //obj为返回数据中的note
+    var container = document.getElementById("inner-body-right").firstChild;
+    var temp = [];
+    for (var key in obj) {
+        temp.push("<div class='title-body'><div class='t1' title='" + obj[key].notename + "'><a href='note.html?NoteId=" + obj[key].noteid + "' target='_blank'>" + obj[key].notename + "</a></div><div class='t2'><a href='author.html?userid=" + obj[key].userid + "' class='t2-author' title='用户ID " + obj[key].userid + "'>ID:" + obj[key].userid + "</a><span class='t2-time'>" + obj[key].time + "</span></div></div>")
+    }
+    container.innerHTML = temp.join("");
 }
