@@ -54,8 +54,33 @@ function setInfo(id) {
             headAvatar.src = response.userphoto;
             headName.innerHTML = response.username;
             headIdentity.innerHTML = response.identity;
+            checkFollow(response.guanzhu, id);
         }
     })
+}
+
+function checkFollow(status, id) {
+    var followButton = document.getElementById("followButton");
+    if (status == "") {
+        followButton.style.display = "none";
+    } else if (status == "0" || status == "2") {
+        followButton.className = "follow";
+        followButton.innerHTML = "关注";
+        followButton.onclick = function() {
+            ajax({
+                "url": "follow_sb.php",
+                "data": {
+                    "Followed": id
+                },
+                "success" :function(res) {
+                    setInfo(id);
+                }
+            })
+        }
+    } else if (status == "1" || status == "3") {
+        followButton.className = "follow followed";
+        followButton.innerHTML = "已关注";
+    }
 }
 
 function myInfo(id) {

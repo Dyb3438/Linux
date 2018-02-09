@@ -97,6 +97,7 @@ a:active {
     font-weight: bold;
 }
 .inner-head {
+    position: relative;
     padding: 116px 20px 16px 20px;
     overflow: hidden;
     background-image: url("../png/head.png");
@@ -198,4 +199,28 @@ a:active {
     padding: 50px 0;
     z-index: 10;
     border: 0;
+}
+.follow {
+    position: absolute;
+    bottom: 30px;
+    right: 40px;
+    display: inline-block;
+    width: 76px;
+    height: 36px;
+    background: #f25d8e;
+    color: #fff;
+    border: 2px solid #fff;
+    border-radius: 4px;
+    font-size: 14px;
+    text-align: center;
+}
+.follow:hover {
+    background: #ff85ad;
+}
+.followed {
+    background: rgba(0, 0, 0, 0.45);
+    border: 2px solid rgba(255, 255, 255, 0.92);
+}
+.followed:hover {
+    background: rgba(0,0,0,.5);
 }
