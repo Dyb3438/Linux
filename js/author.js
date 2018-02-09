@@ -3,6 +3,7 @@ function initColor() {
     document.getElementById("follow").firstChild.style.color = "";
     document.getElementById("dynamic").firstChild.style.color = "";
     document.getElementById("record").firstChild.style.color = "";
+    window.onscroll = function() {}
 }
 
 function myself(id) {
@@ -12,6 +13,9 @@ function myself(id) {
     };
     document.getElementById("record").onclick = function() {
         historyPost(id, 1);
+    };
+    document.getElementById("dynamic").onclick = function() {
+        getMoment();
     };
     myInfo(id);
 }
@@ -153,4 +157,49 @@ function setTlitleNote(obj) {
         temp.push("<div class='title-body'><div class='t1' title='" + obj[key].notename + "'><a href='note.html?NoteId=" + obj[key].noteid + "' target='_blank'>" + obj[key].notename + "</a></div><div class='t2'><a href='author.html?userid=" + obj[key].userid + "' class='t2-author' title='用户ID " + obj[key].userid + "'>ID:" + obj[key].userid + "</a><span class='t2-time'>" + obj[key].time + "</span></div></div>")
     }
     container.innerHTML += temp.join("");
+}
+
+function getMoment() {
+    initColor();
+    document.getElementById("dynamic").firstChild.style.color = "#fb7299";
+    ajax({
+        "url": "user_moment.php",
+        "method": "GET",
+        "success": function(res) {
+            var response = resToJson(res);
+            console.log(response);
+            if (response.moment.length == 0) {
+                document.getElementById("inner-body-right").innerHTML = "<div class='right-container'>暂无新动态</div>";
+            } else {
+                setMoment(response.moment);
+            }
+        }
+    })
+}
+
+function setMoment(obj) {
+    var container = document.getElementById("inner-body-right");
+    var temp = [];
+    for (var key in obj) {
+        if (obj[key].type == "comment") {
+            temp.push(setComment(obj[key]));
+        } else if (obj[key].type == "response") {
+            temp.push(setResponse(obj[key]));
+        } else if (obj[key].type == "friend_moment") {
+            temp.push(setFriendMoment(obj[key]));
+        }
+    }
+    container.innerHTML = temp.join("");
+}
+
+function setComment(obj) {
+    return "<div class='right-container'><a href='note.html?NoteId='" + obj.moment.noteid + " target='_blank'>" + obj.moment.notename + "</a> 有 <span style='color: #00a1d6;'>" + obj.moment.number + "</span> 条新评论<br><br><div class='t2-time'>" + obj.time + "</div></div>";
+}
+
+function setResponse(obj) {
+    return "<div class='right-container'><a href='author.html?userid=" + obj.moment.userid + "'>" + obj.moment.username + "</a> 回复了你在 <a href='note.html?NoteId=" + obj.moment.noteid + "' target='_blank'>" + obj.moment.notename + "</a> 内的评论<div class='floor-info'>" + obj.time + "</div><br><br><div class='floor-content-text'><div class='quoter'><div class='floor-info'>引用 " + obj.moment.quoter.quoterid + "楼 </div><a href='author.html?userid=" + obj.moment.quoter.userid + "' title='用户ID " + obj.moment.quoter.userid + "' target='_blank'>" + obj.moment.quoter.username + "</a><div class='floor-info'> " + obj.moment.quoter.time + "</div><br><br>" + obj.moment.quoter.content + "</div><br>" + obj.moment.content + "</div></div>";
+}
+
+function setFriendMoment(obj) {
+    return "<div class='right-container'><a href='author.html?userid=" + obj.moment.userid + "'>" + obj.moment.username + "</a> 发布了新帖子 <a href='note.html?NoteId=" + obj.moment.noteid + "' target='_blank'>" + obj.moment.notename + "</a><br><br><div class='t2-time'>" + obj.time + "</div></div>";
 }

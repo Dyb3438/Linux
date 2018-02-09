@@ -145,7 +145,9 @@ function loadNoteFloor(obj) {
     var floor = document.getElementById("floor");
     var temp = [];
     for (var key in obj) {
-        if (obj[key].quoter != "0") {
+        if (obj[key].floor == "1") {
+            temp.push("<div class='floor'><div class='floor-author'><img src='" + obj[key].userphoto + "'><a href='author.html?userid=" + obj[key].userid + "' target='_blank' title='用户ID " + obj[key].userid + "'>" + obj[key].username + "</a></div><div class='floor-content'><div class='floor-content-text'>" + obj[key].content + "</div><div class='floor-info'>" + obj[key].floor + "楼 " + obj[key].time + "</div></div></div>");
+        } else if (obj[key].quoter != "0") {
             temp.push(setFloor(obj[key], setQuoter(obj[key].quoter)));
         } else if (obj[key].quoter == "0") {
             temp.push(setFloor(obj[key]));
