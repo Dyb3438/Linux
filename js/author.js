@@ -4,13 +4,14 @@ function initColor() {
     document.getElementById("dynamic").firstChild.style.color = "";
     document.getElementById("record").firstChild.style.color = "";
 }
+
 function myself(id) {
     setInfo(id);
     document.getElementById("info").onclick = function() {
         myInfo(id);
     };
     document.getElementById("record").onclick = function() {
-        historyPost(id);
+        historyPost(id, 1);
     };
     myInfo(id);
 }
@@ -24,7 +25,7 @@ function others(id) {
         otherInfo(id);
     };
     document.getElementById("record").onclick = function() {
-        historyPost(id);
+        historyPost(id, 1);
     };
     setInfo(id);
     otherInfo(id);
@@ -95,19 +96,51 @@ function modify() {
     iframe.style.display = "block";
 }
 
-function historyPost(id){
-    document.getElementById("inner-body-right").innerHTML = "<div class='right-container'></div>";
+function historyPost(id, page) {
+    document.getElementById("inner-body-right").innerHTML = "<div class='right-container'></div><div id='loading' class='right-container' style='display: none;'>加载中。。。</dia>";
     initColor();
     document.getElementById("record").firstChild.style.color = "#fb7299";
+    getHistoryPost(id, page);
+}
+
+function getHistoryPost(id, page) {
+    var loading = document.getElementById("loading");
+    loading.style.display = "block";
     ajax({
         "url": "History-post.php",
         "method": "GET",
         "data": {
-            "Userid": id
+            "Userid": id,
+            "Page": page
         },
         "success": function(res) {
+            loading.style.display = "none";
             var response = resToJson(res);
+            if (response.note == "") {
+                loading.innerHTML = "你已经加载完了";
+                loading.style.display = "block";
+                window.onscroll = function() {}
+                return;
+            }
             setTlitleNote(response.note);
+            if (response.pages == "1") {
+                loading.innerHTML = "你已经加载完了";
+                loading.style.display = "block";
+                window.onscroll = function() {}
+                return;
+            }
+            window.onscroll = function() {
+                var scrollTop = window.document.documentElement.scrollTop;
+                var innerHeight = window.innerHeight;
+                var scrollHeight = window.document.documentElement.scrollHeight;
+                // console.log(scrollTop);
+                // console.log(innerHeight);
+                // console.log(scrollHeight);
+                if (scrollTop >= scrollHeight - innerHeight - 1) {
+                    window.onscroll = function() {}
+                    getHistoryPost(id, page + 1);
+                }
+            }
         }
     })
 }
@@ -119,5 +152,5 @@ function setTlitleNote(obj) {
     for (var key in obj) {
         temp.push("<div class='title-body'><div class='t1' title='" + obj[key].notename + "'><a href='note.html?NoteId=" + obj[key].noteid + "' target='_blank'>" + obj[key].notename + "</a></div><div class='t2'><a href='author.html?userid=" + obj[key].userid + "' class='t2-author' title='用户ID " + obj[key].userid + "'>ID:" + obj[key].userid + "</a><span class='t2-time'>" + obj[key].time + "</span></div></div>")
     }
-    container.innerHTML = temp.join("");
+    container.innerHTML += temp.join("");
 }
