@@ -70,6 +70,7 @@ function checkFollow(status, id) {
             ajax({
                 "url": "follow_sb.php",
                 "data": {
+                    "Type": 1,
                     "Followed": id
                 },
                 "success" :function(res) {
@@ -80,6 +81,18 @@ function checkFollow(status, id) {
     } else if (status == "1" || status == "3") {
         followButton.className = "follow followed";
         followButton.innerHTML = "已关注";
+        followButton.onclick = function() {
+            ajax({
+                "url": "follow_sb.php",
+                "data": {
+                    "Type": 0,
+                    "Followed": id
+                },
+                "success" :function(res) {
+                    setInfo(id);
+                }
+            })
+        }
     }
 }
 
