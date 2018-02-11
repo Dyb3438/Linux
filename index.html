@@ -49,7 +49,7 @@
                 <div><a href="forum.html"><button class="submit">游客访问</button></a></div>
             </div>
             <div id="logined">
-                <img src="" class="previewArea" id="avatar">
+                <a href="javascript:void(0)"><img src="" class="previewArea" id="avatar"></a>
                 <div><a href="forum.html"><button class="submit">访问论坛</button></a></div>
                 <div><a href="javascript:void(0)"><button class="submit" onclick="logOff()">注销</button></a></div>
             </div>
@@ -69,6 +69,7 @@
                     } else if (msg.result == "Y") {
                         unlogin.style.display = "none";
                         avatar.src = msg.userphoto;
+                        avatar.parentNode.href = "author.html?userid=" + msg.userid;
                     }
                 }
             });

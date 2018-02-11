@@ -68,7 +68,7 @@
                         location.href = "LogIn.html";
                     } else if (res.result == "Y") {
                         myId = res.userid;
-                        header.innerHTML = "<img src='" + res.userphoto + "' class='avatar'><a href='author.html?userid=" + res.userid + "' class='headerName' target='_blank'>" + res.username + "</a>";
+                        header.innerHTML = "<img src='" + res.userphoto + "' class='avatar'><a href='javascript:void(0)' class='headerName' target='_blank'>" + res.username + "</a>";
                         checkFriend();
                         window.clearInterval(listTimer);
                         listTimer = self.setInterval("checkFriend()", 5000);
