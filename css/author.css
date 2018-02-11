@@ -135,6 +135,7 @@ a:active {
     overflow: hidden;
 }
 .inner-body-left {
+    position: relative;
     padding-top: 10px;
     float: left;
     width: 140px;
@@ -223,4 +224,32 @@ a:active {
 }
 .followed:hover {
     background: rgba(0,0,0,.5);
+}
+.friendAvatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+}
+.friendName {
+    font-size: 16px;
+    color: #222;
+    margin-left: 20px;
+    position: absolute;
+}
+.friendName:hover {
+    color: #00a1d6;
+}
+.newCall {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    height: 20px;
+    max-width: 30px;
+    border-radius: 20px;
+    padding: 0 5px;
+    background: #e53935;
+    color: #fff;
+    float: right;
+    line-height: 20px;
+    text-align: center;
 }

@@ -1,3 +1,4 @@
+var checkChatTimer;
 function initColor() {
     document.getElementById("info").firstChild.style.color = "";
     document.getElementById("follow").firstChild.style.color = "";
@@ -11,6 +12,12 @@ function myself(id) {
     document.getElementById("info").onclick = function() {
         myInfo(id);
     };
+    document.getElementById("follow").onclick = function() {
+        getfollow(id);
+    };
+    document.getElementById("fans").onclick = function() {
+        getfans(id);
+    };
     document.getElementById("record").onclick = function() {
         historyPost(id, 1);
     };
@@ -18,6 +25,11 @@ function myself(id) {
         getMoment();
     };
     myInfo(id);
+    document.getElementById("chat").onclick = function() {
+        checkChat();
+    }
+    checkChat();
+    checkChatTimer = self.setInterval("checkChat()",3000);
 }
 
 function others(id) {
@@ -25,6 +37,8 @@ function others(id) {
     var chat = document.getElementById("chat");
     dynamic.style.display = "none";
     chat.style.display = "none";
+    document.getElementById("follow").style.display = "none";
+    document.getElementById("fans").style.display = "none";
     document.getElementById("info").onclick = function() {
         otherInfo(id);
     };
@@ -73,7 +87,7 @@ function checkFollow(status, id) {
                     "Type": 1,
                     "Followed": id
                 },
-                "success" :function(res) {
+                "success": function(res) {
                     setInfo(id);
                 }
             })
@@ -88,7 +102,7 @@ function checkFollow(status, id) {
                     "Type": 0,
                     "Followed": id
                 },
-                "success" :function(res) {
+                "success": function(res) {
                     setInfo(id);
                 }
             })
@@ -240,4 +254,59 @@ function setResponse(obj) {
 
 function setFriendMoment(obj) {
     return "<div class='right-container'><a href='author.html?userid=" + obj.moment.userid + "'>" + obj.moment.username + "</a> 发布了新帖子 <a href='note.html?NoteId=" + obj.moment.noteid + "' target='_blank'>" + obj.moment.notename + "</a><br><br><div class='t2-time'>" + obj.time + "</div></div>";
+}
+
+function getfollow(id) {
+    ajax({
+        "url": "Friend-list.php",
+        "method": "GET",
+        "data": {
+            "type": 1
+        },
+        "success": function(response) {
+            var res = resToJson(response);
+            setFriendList(res.following);
+        }
+    })
+}
+
+function getfans(id) {
+    ajax({
+        "url": "Friend-list.php",
+        "method": "GET",
+        "data": {
+            "type": 2
+        },
+        "success": function(response) {
+            var res = resToJson(response);
+            setFriendList(res.fans);
+        }
+    })
+}
+
+function setFriendList(obj) {
+    var container = document.getElementById("inner-body-right");
+    var temp = [];
+    for (var key in obj) {
+        temp.push("<div class='right-container'><img src='" + obj[key].userphoto + "' class='friendAvatar'><a href='author?userid=" + obj[key].userid + "' class='friendName'>"+ obj[key].username + "</a></div>");
+    }
+    container.innerHTML = temp.join("");
+}
+
+function checkChat() {
+    var chat = document.getElementById("chat");
+    ajax({
+        "url": "chat-outside.php",
+        "method": "GET",
+        "success": function(res) {
+            if (chat.getAttribute("newChat") != res) {
+                chat.setAttribute("newChat", res);
+                if (res != "0") {
+                    chat.innerHTML = "<div class='left-list'>· 聊天</div><div class='newCall'>" + res + "</div>";
+                } else if (res == "0") {
+                    chat.innerHTML = "<div class='left-list'>· 聊天</div>";
+                }
+            }
+        }
+    })
 }
