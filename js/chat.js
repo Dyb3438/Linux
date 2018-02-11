@@ -13,7 +13,6 @@ function sendDialog(e) {
     } else if (e.keyCode == 13 && chatText.value != "") {
         e.preventDefault();
         document.getElementById("chatInputForm").submit();
-        cleanTextarea();
     } else if (e.keyCode == 13) {
         e.preventDefault();
     }
@@ -24,6 +23,7 @@ function sendedDialog(t) {
     var reg = /Y/;
     if (reg.test(res)) {
         chackChatContent(chatBody, chatBody.getAttribute("receiverId"));
+        cleanTextarea();
     }
     t.contentDocument.getElementsByTagName("body")[0].innerHTML = "";
 }
@@ -33,9 +33,9 @@ function setChatContent(obj) {
     var chatBody = document.getElementById("chatBody");
     for (var key in obj) {
         if (obj[key].sender.userid == objectId) {
-            temp.push("<div class='objectDialog'><img src='" + obj[key].sender.userphoto + "' class='avatar'><div class='chatContent'><div class='name'>" + obj[key].sender.username + "&nbsp;&nbsp;" + obj[key].time + "</div><div class='dialog'>" + obj[key].image + "</div></div></div>");
+            temp.push("<div class='objectDialog'><img src='" + obj[key].sender.userphoto + "' class='avatar'><div class='chatContent'><div class='name'><span class='colorful'>" + obj[key].sender.username + "</span>&nbsp;&nbsp;" + obj[key].time + "</div><div class='dialog'>" + obj[key].image + "</div></div></div>");
         } else if (obj[key].sender.userid == myId) {
-            temp.push("<div class='myDialog'><img src='" + obj[key].sender.userphoto + "' class='avatar'><div class='chatContent'><div class='name'>" + obj[key].time + "&nbsp;&nbsp;" + obj[key].sender.username + "</div><div class='dialog'>" + obj[key].image + "</div></div></div>");
+            temp.push("<div class='myDialog'><img src='" + obj[key].sender.userphoto + "' class='avatar'><div class='chatContent'><div class='name'>" + obj[key].time + "&nbsp;&nbsp;<span class='colorful'>" + obj[key].sender.username + "</span></div><div class='dialog'>" + obj[key].image + "</div></div></div>");
         }
     }
     chatBody.innerHTML += temp.join("");

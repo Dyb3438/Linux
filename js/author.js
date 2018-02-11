@@ -4,6 +4,7 @@ function initColor() {
     document.getElementById("follow").firstChild.style.color = "";
     document.getElementById("dynamic").firstChild.style.color = "";
     document.getElementById("record").firstChild.style.color = "";
+    document.getElementById("fans").firstChild.style.color = "";
     window.onscroll = function() {}
 }
 
@@ -257,6 +258,8 @@ function setFriendMoment(obj) {
 }
 
 function getfollow(id) {
+    initColor();
+    document.getElementById("follow").firstChild.style.color = "#fb7299";
     ajax({
         "url": "Friend-list.php",
         "method": "GET",
@@ -271,6 +274,8 @@ function getfollow(id) {
 }
 
 function getfans(id) {
+    initColor();
+    document.getElementById("fans").firstChild.style.color = "#fb7299";
     ajax({
         "url": "Friend-list.php",
         "method": "GET",
@@ -286,6 +291,10 @@ function getfans(id) {
 
 function setFriendList(obj) {
     var container = document.getElementById("inner-body-right");
+    if (obj.length == 0) {
+        container.innerHTML = "<div class='right-container'>列表中无任何内容</div>";
+        return;
+    }
     var temp = [];
     for (var key in obj) {
         temp.push("<div class='right-container'><img src='" + obj[key].userphoto + "' class='friendAvatar'><a href='author?userid=" + obj[key].userid + "' class='friendName'>"+ obj[key].username + "</a></div>");
