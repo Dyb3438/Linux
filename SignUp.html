@@ -349,7 +349,9 @@
                     } else if(message.result == "N") {
                         resetCode();
                         if (message.msg == "\u9a8c\u8bc1\u7801\u9519\u8bef\uff01") {
-                            inputErr(document.getElementById('Code'));
+                            var Code = document.getElementById('Code');
+                            initInfo(Code);
+                            inputErr(Code);
                         } else {
                             alert("可能是你姿势不对，注册失败了");
                         }
