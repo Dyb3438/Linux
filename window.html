@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="UTF-8">
+        <title>聊天窗口</title>
+        <link rel="stylesheet" type="text/css" href="css/chatWindow.css">
+    </head>
+    <body>
+        <div id="container">
+            <div id="left">
+                <div id="header">
+                    <img src="userphoto/root.png" class="avatar"><a href="javascript:void(0)" class="headerName" target="_blank">用户12311111111111111111321321</a>
+                </div>
+                <div id="address" class="scrollbar">
+                    <div class="friend" onclick='chatWithF(this, id)'>
+                        <img src="userphoto/root.png" class="avatar">
+                        <div class="friendName">111111111111111111111111111111</div>
+                        <div class="newCall">99+</div>
+                    </div>
+                    <div class="friend" onclick='chatWithF(this, id)'>
+                        <img src="userphoto/root.png" class="avatar">
+                        <div class="friendName">111111111111111111111111111111</div>
+                        <div class="newCall">99+</div>
+                    </div>
+                    <div class="friend" onclick='chatWithF(this, id)'>
+                        <img src="userphoto/root.png" class="avatar">
+                        <div class="friendName">111111111111111111111111111111</div>
+                        <div class="newCall">99+</div>
+                    </div>
+                    <div class="friend" onclick='chatWithF(this, id)'>
+                        <img src="userphoto/root.png" class="avatar">
+                        <div class="friendName">111111111111111111111111111111</div>
+                        <div class="newCall">99+</div>
+                    </div>
+                    <div class="friend" onclick='chatWithF(this, id)'>
+                        <img src="userphoto/root.png" class="avatar">
+                        <div class="friendName">111111111111111111111111111111</div>
+                        <div class="newCall">99+</div>
+                    </div>
+                    <div class="friend" onclick='chatWithF(this, id)'>
+                        <img src="userphoto/root.png" class="avatar">
+                        <div class="friendName">111111111111111111111111111111</div>
+                        <div class="newCall">99+</div>
+                    </div>
+                    <div class="friend" onclick='chatWithF(this, id)'>
+                        <img src="userphoto/root.png" class="avatar">
+                        <div class="friendName">111111111111111111111111111111</div>
+                        <div class="newCall">99+</div>
+                    </div>
+                    <div class="friend" onclick='chatWithF(this, id)'>
+                        <img src="userphoto/root.png" class="avatar">
+                        <div class="friendName">111111111111111111111111111111</div>
+                        <div class="newCall">99+</div>
+                    </div>
+                    <div class="friend" onclick='chatWithF(this, id)'>
+                        <img src="userphoto/root.png" class="avatar">
+                        <div class="friendName">111111111111111111111111111111</div>
+                        <div class="newCall">99+</div>
+                    </div>
+                    <div class="friend" onclick='chatWithF(this, id)'>
+                        <img src="userphoto/root.png" class="avatar">
+                        <div class="friendName">111111111111111111111111111111</div>
+                        <div class="newCall">99+</div>
+                    </div>
+                    <div class="friend" onclick='chatWithF(this, id)'>
+                        <img src="userphoto/root.png" class="avatar">
+                        <div class="friendName">111111111111111111111111111111</div>
+                        <div class="newCall">99+</div>
+                    </div>
+                    <div class="friend" onclick='chatWithF(this, id)'>
+                        <img src="userphoto/root.png" class="avatar">
+                        <div class="friendName">111111111111111111111111111111</div>
+                        <div class="newCall">99+</div>
+                    </div>
+                </div>
+            </div>
+            <div id="mainBody">
+                <div id="objectName"><!-- Tom --></div>
+                <div id="chatBody" class="scrollbar">
+                    <!-- <div class="objectDialog">
+                        <img src="" class="avatar">
+                        <div class="chatContent">
+                            <div class="name">object&nbsp;&nbsp;2018-02-09 18:24:07</div>
+                            <div class="dialog">5as31f3as1f3sda一二三gadsfsdafsasdgdasgasdgadsgaggggggggggggggggggggggggggggggggadfsafadfsadfagasfg5sd3g43ds5g3d54g35sd43g5sd3g54as3g</div>
+                        </div>
+                    </div>
+                    <div class="objectDialog">
+                        <img src="" class="avatar">
+                        <div class="chatContent">
+                            <div class="name">object</div>
+                            <div class="dialog">5as31f3as1f3sdagadsfsdafsasdgdasgasdgadsgaggggggggggggggggggggggggggggggggadfsafadfsadfagasfg5sd3g43ds5g3d54g35sd43g5sd3g54as3g</div>
+                        </div>
+                    </div>
+                    <div class="myDialog">
+                        <img src="" class="avatar">
+                        <div class="chatContent">
+                            <div class="name">my</div>
+                            <div class="dialog">5as31f3as1f3sdagadsfsdafsasdgdasgasdgadsgaggggggggggggggggggggggggggggggggadfsafadfsadfagasfg5sd3g43ds5g3d54g35sd43g5sd3g54as3g</div>
+                        </div>
+                    </div> -->
+                </div>
+                <div id="chatInput">
+                    <form  id="chatInputForm" style="margin-top: 40px; height: calc(100% - 40px)" method="POST" action="Send-dialog.php" target="formTarget" onsubmit="return checkBeforeSendDialog()">
+                        <input type="hidden" name="Receiver" id="Receiver">
+                        <textarea name="ChatText" id="ChatText" class="chatText" onkeypress="sendDialog(event)" required="required"></textarea>
+                        <input type="submit" value="发送" class="sendButton">
+                        <div style="height: 28px;line-height: 28px;float: right; font-size: 14px;color: rgb(79, 79, 79);">按Ctrl + Enter换行&nbsp;&nbsp;</div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="js/ajax.js"></script>
+        <script type="text/javascript" src="js/chat.js"></script>
+        <script type="text/javascript">
+            ajax({
+                "url": "User-image.php",
+                "method": "GET",
+                "success": function(response) {
+                    var header = document.getElementById("header");
+                    var res = resToJson(response);
+                    if (res.result == "N") {
+                        alert("未登录，请先登陆");
+                        location.href = "LogIn.html";
+                    } else if (res.result == "Y") {
+                        myId = res.userid;
+                        header.innerHTML = "<img src='" + res.userphoto + "' class='avatar'><a href='author.html?userid=" + res.userid + "' class='headerName' target='_blank'>" + res.username + "</a>";
+                        checkFriend();
+                        window.clearInterval(listTimer);
+                        listTimer = self.setInterval("checkFriend()", 5000);
+                    }
+                }
+            });
+        </script>
+        <iframe name="formTarget" style="display: none;" onload="sendedDialog(this)"></iframe>
+    </body>
+</html>
