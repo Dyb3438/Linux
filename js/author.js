@@ -81,6 +81,7 @@ function checkFollow(status, id) {
     } else if (status == "0" || status == "2") {
         followButton.className = "follow";
         followButton.innerHTML = "关注";
+        followButton.style.display = "block";
         followButton.onclick = function() {
             ajax({
                 "url": "follow_sb.php",
@@ -96,6 +97,7 @@ function checkFollow(status, id) {
     } else if (status == "1" || status == "3") {
         followButton.className = "follow followed";
         followButton.innerHTML = "已关注";
+        followButton.style.display = "block";
         followButton.onclick = function() {
             ajax({
                 "url": "follow_sb.php",

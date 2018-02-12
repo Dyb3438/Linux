@@ -29,19 +29,27 @@ var image_src = ["background-image/22600763_p0_master1200.jpg",
 
 
 (function() {
-    background_1.backgroundImage = "url('" + image_src[Math.round(23 * Math.random())] + "')";
-    background_2.backgroundImage = "url('" + image_src[Math.round(23 * Math.random())] + "')";
-    window.setInterval("changeBackground()", 20000);
+    var temp = Math.round(23 * Math.random());
+    background_1.backgroundImage = "url('" + image_src[temp] + "')";
+    var img = new Image();
+    img.src = image_src[temp];
+    img.onload = function() {
+        temp = Math.round(23 * Math.random());
+        background_2.backgroundImage = "url('" + image_src[temp] + "')";
+        setTimeout(function() {
+            backgroundTimer(temp);
+        }, 20000);
+    }
 })();
 
-function changeBackground() {
+function changeBackground(temp) {
     if (status == 1) {
         background_1.opacity = 0;
         setTimeout(function() {
             background_2.zIndex = -1;
             background_1.zIndex = -2;
             background_1.opacity = 1;
-            background_1.backgroundImage = "url('" + image_src[Math.round(23 * Math.random())] + "')";
+            background_1.backgroundImage = "url('" + image_src[temp] + "')";
         }, 600)
         status = 2;
     } else if (status == 2) {
@@ -50,8 +58,20 @@ function changeBackground() {
             background_1.zIndex = -1;
             background_2.zIndex = -2;
             background_2.opacity = 1;
-            background_2.backgroundImage = "url('" + image_src[Math.round(23 * Math.random())] + "')";
+            background_2.backgroundImage = "url('" + image_src[temp] + "')";
         }, 600)
         status = 1;
+    }
+}
+
+function backgroundTimer(temp) {
+    var img = new Image();
+    img.src = image_src[temp];
+    img.onload = function() {
+        temp = Math.round(23 * Math.random());
+        changeBackground(temp);
+        setTimeout(function() {
+            backgroundTimer(temp);
+        }, 20000);
     }
 }

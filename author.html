@@ -11,12 +11,12 @@
         <div class="menu">
             <a href="index.html"><div class="logo"></div></a>
             <input type="text" name="search" class="search" placeholder="搜索" formaction="" onkeyup="search(event, this.value)">
-            <div id="logined">
+            <div id="logined" style="display: none;">
                 <a href="javascript:void(0)"><div class="menu-button" onclick="logOff()">注销</div></a>
                 <a href="javascript:void(0)"><div class="menu-button" id="username"></div></a>
                 <a href="javascript:void(0)"><img src="userphoto/root.png" class="menu-avatar" id="avatar"></a>
             </div>
-            <div id="unlogin">
+            <div id="unlogin" style="display: none;">
                 <a href="SignUp.html"><div class="menu-button">注册</div></a>
                 <a href="LogIn.html"><div class="menu-button">登录</div></a>
             </div>
@@ -25,10 +25,10 @@
             <div class="inner-head">
                 <img src="userphoto/root.png" id="head-avatar">
                 <div class="head-info">
-                    <div id="head-name">master</div>
-                    <div id="head-identity">版主</div>
+                    <div id="head-name"></div>
+                    <div id="head-identity"></div>
                 </div>
-                <button id="followButton" class="follow followed">已关注</button>
+                <button id="followButton" class="follow" style="display: none;">关注</button>
             </div>
             <div class="inner-body">
                 <div class="inner-body-left">
@@ -37,14 +37,9 @@
                     <a href="javascript:void(0)" id="fans"><div class="left-list">· 粉丝</div></a>
                     <a href="javascript:void(0)" id="dynamic"><div class="left-list">· 动态</div></a>
                     <a href="javascript:void(0)" id="record"><div class="left-list">· 发贴记录</div></a>
-                    <a href="window.html" id="chat" target="_blank"><div class="left-list">· 聊天</div><div class="newCall">99+</div></a>
+                    <a href="window.html" id="chat" target="_blank"><div class="left-list">· 聊天</div></a>
                 </div>
-                <div id="inner-body-right">
-                    <div class='right-container'>
-                        <img src="userphoto/root.png" class="friendAvatar">
-                        <a href="author?userid=" class="friendName">test</a>
-                    </div>
-                </div>
+                <div id="inner-body-right"></div>
             </div>
         </div>
         <div id="background-gray" style="display: none;"></div>
@@ -66,14 +61,14 @@
                     var username = document.getElementById("username");
                     var msg = JSON.parse(res);
                     if (msg.result == "N") {
-                        logined.style.display = "none";
+                        unlogin.style.display = "block";
                         others(parm.userid);
                     } else if (msg.result == "Y") {
-                        unlogin.style.display = "none";
                         avatar.src = msg.userphoto;
                         avatar.parentNode.href = "author.html?userid=" + msg.userid;
                         username.innerHTML = msg.username;
                         username.parentNode.href = "author.html?userid=" + msg.userid;
+                        logined.style.display = "block";
                         if (parm.userid == msg.userid) {
                             myself(msg.userid);
                         } else {

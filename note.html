@@ -11,61 +11,21 @@
         <div class="menu">
             <a href="index.html"><div class="logo"></div></a>
             <input type="text" name="search" class="search" placeholder="搜索" formaction="" onkeyup="search(event, this.value)">
-            <div id="logined">
+            <div id="logined" style="display: none;">
                 <a href="javascript:void(0)"><div class="menu-button" onclick="logOff()">注销</div></a>
                 <a href="javascript:void(0)" target="_blank"><div class="menu-button" id="username"></div></a>
                 <a href=javascript:void(0)"" target="_blank"><img src="userphoto/root.png" class="menu-avatar" id="avatar"></a>
             </div>
-            <div id="unlogin">
+            <div id="unlogin" style="display: none;">
                 <a href="SignUp.html"><div class="menu-button">注册</div></a>
                 <a href="LogIn.html"><div class="menu-button">登录</div></a>
             </div>
         </div>
         <div class="container">
-            <div id="tiezi" class="forum-title">
-                <div class="t1" title="标题1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111">
-                    <a href="note.html?NoteId=1">标题1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</a>
-                </div>
-            </div>
-            <div id="floor" class="forum-title">
-                <div class="floor">
-                    <div class="floor-author">
-                        <img src="userphoto/root.png">
-                        <a href="author.html?userid=123456" title="用户ID 123456" target="_blank">master</a>
-                    </div>
-                    <div class="floor-content">
-                        <div class="floor-content-text">1231321313</div>
-                        <a href="#post-forum" onclick="reply(1)">回复</a>
-                        <div class="floor-info">1楼 2018-01-28 20:09</div>
-                    </div>
-                </div>
-                <div class="floor">
-                    <div class="floor-author">
-                        <img src="userphoto/root.png">
-                        <a href="author.html?userid=123456" title="用户ID 123456" target="_blank">master</a>
-                    </div>
-                    <div class="floor-content">
-                        <div class="floor-content-text">
-                            <div class="quoter">
-                                <div class="floor-info">引用 1楼 </div><a href="author.html?userid=123456" title="用户ID 123456" target="_blank">master</a><div class="floor-info"> 2018-01-28 20:09</div>
-                                <br>
-                                <br>
-                                1231321313
-                            </div>
-                            <br>
-                            1231321313
-                        </div>
-                        <a href="#post-forum" onclick="reply(2)">回复</a>
-                        <div class="floor-info">2楼 2018-01-28 20:10</div>
-                    </div>
-                </div>
-            </div>
-            <div id="page-area" class="page-body">
-                <!-- <a href=""><div class="page-button"><前一页</div></a>
-                <a href="forum.html?Page=1"><div class="page-button">1</div></a>
-                <a href=""><div class="page-button">后一页></div></a> -->
-            </div>
-            <div id="post-forum">
+            <div id="tiezi" class="forum-title"></div>
+            <div id="floor" class="forum-title"></div>
+            <div id="page-area" class="page-body"></div>
+            <div id="post-forum" style="display: none;">
                 <div style="margin-bottom: 8px;">..:: 回复 ::..</div>
                 <div id="quote"  style="margin-bottom: 8px;"></div>
                 <form method="POST" action="Comment.php" target="formTarget">
@@ -96,15 +56,15 @@
                     var username = document.getElementById("username");
                     var msg = JSON.parse(res);
                     if (msg.result == "N") {
-                        logined.style.display = "none";
+                        unlogin.style.display = "block";
                         rightPostButton.style.display = "none";
-                        postForum.style.display = "none";
                     } else if (msg.result == "Y") {
-                        unlogin.style.display = "none";
+                        postForum.style.display = "block";
                         avatar.src = msg.userphoto;
                         avatar.parentNode.href = "author.html?userid=" + msg.userid;
                         username.innerHTML = msg.username;
                         username.parentNode.href = "author.html?userid=" + msg.userid;
+                        logined.style.display = "block";
                     }
                 }
             });

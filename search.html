@@ -11,27 +11,19 @@
         <div class="menu">
             <a href="index.html"><div class="logo"></div></a>
             <input type="text" name="search" class="search" placeholder="搜索" formaction="" onkeyup="search(event, this.value)">
-            <div id="logined">
+            <div id="logined" style="display: none;">
                 <a href="javascript:void(0)"><div class="menu-button" onclick="logOff()">注销</div></a>
                 <a href="javascript:void(0)" target="_blank"><div class="menu-button" id="username"></div></a>
                 <a href="javascript:void(0)" target="_blank"><img src="userphoto/root.png" class="menu-avatar" id="avatar"></a>
             </div>
-            <div id="unlogin">
+            <div id="unlogin" style="display: none;">
                 <a href="SignUp.html"><div class="menu-button">注册</div></a>
                 <a href="LogIn.html"><div class="menu-button">登录</div></a>
             </div>
         </div>
         <div class="container">
-            <div id="forum-title" class="forum-title">
-                <!-- <div class="title-body">
-                    <div class="t1" title="标题1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"><a href="">标题1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</a></div><div class="t2"><a href="" class="t2-author">作者</a><span class="t2-time">时间</span></div>
-                </div> -->
-            </div>
-            <div id="page-area" class="page-body">
-                <!-- <a href=""><div class="page-button"><前一页</div></a>
-                <a href="forum.html?Page=1"><div class="page-button">1</div></a>
-                <a href=""><div class="page-button">后一页></div></a> -->
-            </div>
+            <div id="forum-title" class="forum-title"></div>
+            <div id="page-area" class="page-body"></div>
         </div>
         <div class="right-side" id="right-side">
             <a href="#banner"><div class="right-side-button">TOP</div></a>
@@ -48,9 +40,9 @@
                     var username = document.getElementById("username");
                     var msg = JSON.parse(res);
                     if (msg.result == "N") {
-                        logined.style.display = "none";
+                        unlogin.style.display = "block";
                     } else if (msg.result == "Y") {
-                        unlogin.style.display = "none";
+                        logined.style.display = "block";
                         avatar.src = msg.userphoto;
                         avatar.parentNode.href = "author.html?userid=" + msg.userid;
                         username.innerHTML = msg.username;
