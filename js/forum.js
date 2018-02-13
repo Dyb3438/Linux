@@ -146,7 +146,7 @@ function loadNoteFloor(obj) {
     var temp = [];
     for (var key in obj) {
         if (obj[key].floor == "1") {
-            temp.push("<div class='floor'><div class='floor-author'><img src='" + obj[key].userphoto + "'><a href='author.html?userid=" + obj[key].userid + "' target='_blank' title='用户ID " + obj[key].userid + "'>" + obj[key].username + "</a></div><div class='floor-content'><div class='floor-content-text'>" + obj[key].content + "</div><div class='floor-info'>" + obj[key].floor + "楼 " + obj[key].time + "</div></div></div>");
+            temp.push("<div class='floor'><div class='floor-author'><img src='" + obj[key].userphoto + "'><a href='author.html?userid=" + obj[key].userid + "' target='_blank' title='用户ID " + obj[key].userid + "'>" + obj[key].username + "</a></div><div class='floor-content'><div class='floor-content-text'>" + obj[key].content + "</div>" + setPraise(obj[key]["T-Fpraise"], obj[key].praiseid, obj[key].floor) + "<div class='floor-info'>" + obj[key].floor + "楼 " + obj[key].time + "</div></div></div>");
         } else if (obj[key].quoter != "0") {
             temp.push(setFloor(obj[key], setQuoter(obj[key].quoter)));
         } else if (obj[key].quoter == "0") {
@@ -163,8 +163,59 @@ function setQuoter(quoter) {
 
 function setFloor(obj, quoter) {
     var temp = quoter || "";
-    var floor = "<div class='floor'><div class='floor-author'><img src='" + obj.userphoto + "'><a href='author.html?userid=" + obj.userid + "' target='_blank' title='用户ID " + obj.userid + "'>" + obj.username + "</a></div><div class='floor-content'><div class='floor-content-text'>" + temp + obj.content + "</div><a href='#post-forum' onclick='reply(" + obj.floor + ")'>回复</a><div class='floor-info'>" + obj.floor + "楼 " + obj.time + "</div></div></div>";
+    var floor = "<div class='floor'><div class='floor-author'><img src='" + obj.userphoto + "'><a href='author.html?userid=" + obj.userid + "' target='_blank' title='用户ID " + obj.userid + "'>" + obj.username + "</a></div><div class='floor-content'><div class='floor-content-text'>" + temp + obj.content + "</div>" + setPraise(obj["T-Fpraise"], obj.praiseid, obj.floor) + "<div class='floor-info'>" + obj.floor + "楼 " + obj.time + "</div><a href='#post-forum' onclick='reply(" + obj.floor + ")'>回复</a></div></div>";
     return floor;
+}
+
+function setPraise(status, num, id) {
+    var temp = "";
+    var numS
+    if (num == 0) {
+        numS = "";
+    } else {
+        numS = num
+    }
+    if (status == "0") {
+        temp = "<a href='javascript:void(0)' onclick='thumbUp(this, " + id + " , " + status + ", " + num + ")'>点赞 " + numS + " </a>";
+    } else if (status == "1") {
+        temp = "<a href='javascript:void(0)' onclick='thumbUp(this, " + id + " , " + status + ", " + num + ")'>&hearts; 已点赞 " + numS + " </a>";
+    }
+    return temp;
+}
+
+function thumbUp(element, id, status, num) {
+    num = parseInt(num);
+    ajax({
+        "url": "praise.php",
+        "data": {
+            "Noteid": getParm().NoteId,
+            "Floor": id,
+            "Type": status
+        },
+        "success": function(res) {
+            if (res == "Y") {
+                if (status == "0") {
+                    element.innerHTML = "&hearts; 已点赞 " + (num + 1);
+                    element.onclick = function() {
+                        thumbUp(element, id, 1, num + 1)
+                    }
+                } else if (status == "1") {
+                    var numS;
+                    if (num - 1 == 0) {
+                        numS = "";
+                    } else {
+                        numS = num - 1
+                    }
+                    element.innerHTML = "点赞 " + numS;
+                    element.onclick = function() {
+                        thumbUp(element, id, 0, num - 1)
+                    }
+                }
+            } else if (res == "N") {
+                alert("点赞失败，你可能未登录！");
+            }
+        }
+    })
 }
 
 function setNoteTitle(notename, noteid) {

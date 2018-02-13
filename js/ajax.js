@@ -35,7 +35,7 @@ function ajax(opt) {
 
 function resToJson(res) {
     //把返回信息中的Json数据提出来
-    var reg = /{.+}/;
+    var reg = /{.+:.+}/;
     console.log(res);
     return JSON.parse(res.match(reg));
     //返回对象
