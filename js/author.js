@@ -1,4 +1,5 @@
 var checkChatTimer;
+
 function initColor() {
     document.getElementById("info").firstChild.style.color = "";
     document.getElementById("follow").firstChild.style.color = "";
@@ -30,7 +31,7 @@ function myself(id) {
         checkChat();
     }
     checkChat();
-    checkChatTimer = self.setInterval("checkChat()",3000);
+    checkChatTimer = self.setInterval("checkChat()", 3000);
 }
 
 function others(id) {
@@ -54,6 +55,7 @@ function setInfo(id) {
     var headAvatar = document.getElementById("head-avatar");
     var headName = document.getElementById("head-name");
     var headIdentity = document.getElementById("head-identity");
+    var manage = document.getElementById("manage");
     ajax({
         "url": "Image.php",
         "method": "GET",
@@ -69,6 +71,10 @@ function setInfo(id) {
             headAvatar.src = response.userphoto;
             headName.innerHTML = response.username;
             headIdentity.innerHTML = response.identity;
+            if (response.identity == "管理员" || response.identity == "版主") {
+                manage.style.display = "inline";
+                manage.href = "manageForum.html";
+            }
             checkFollow(response.guanzhu, id);
         }
     })
@@ -248,7 +254,7 @@ function setMoment(obj) {
 }
 
 function setComment(obj) {
-    return "<div class='right-container'><a href='note.html?NoteId='" + obj.moment.noteid + " target='_blank'>" + obj.moment.notename + "</a> 有 <span style='color: #00a1d6;'>" + obj.moment.number + "</span> 条新评论<br><br><div class='t2-time'>" + obj.time + "</div></div>";
+    return "<div class='right-container'><a href='note.html?NoteId=" + obj.moment.noteid + "' target='_blank'>" + obj.moment.notename + "</a> 有 <span style='color: #00a1d6;'>" + obj.moment.number + "</span> 条新评论<br><br><div class='t2-time'>" + obj.time + "</div></div>";
 }
 
 function setResponse(obj) {
@@ -299,7 +305,7 @@ function setFriendList(obj) {
     }
     var temp = [];
     for (var key in obj) {
-        temp.push("<div class='right-container'><img src='" + obj[key].userphoto + "' class='friendAvatar'><a href='author?userid=" + obj[key].userid + "' class='friendName'>"+ obj[key].username + "</a></div>");
+        temp.push("<div class='right-container'><img src='" + obj[key].userphoto + "' class='friendAvatar'><a href='author?userid=" + obj[key].userid + "' class='friendName'>" + obj[key].username + "</a></div>");
     }
     container.innerHTML = temp.join("");
 }

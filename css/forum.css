@@ -124,17 +124,17 @@ html,body {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-#top .t1 a{
+#top .t1 a, .float-window .t1 a {
     color: #f25d8e;
 }
-#tiezi .t1{
+#tiezi .t1 {
     padding-right: 50px;
     width: calc(100% - 100px);
     border: none;
 }
 .t2 {
     position: absolute;
-    right: 0;
+    /*right: 0;*/
     display: inline-block;
     padding: 6px;
     width: calc(28% - 12px);
@@ -372,4 +372,62 @@ html,body {
 }
 .blueButton:hover {
     background-color: #00b5e5;
+}
+.background-gray {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(128, 128, 128, .5);
+}
+.float-window {
+    position: fixed;
+    left: calc(50% - 40vw);
+    margin-top: 10vh;
+    width: 80vw;
+    background-color: rgba(255, 255, 255, .92);
+    border-radius: 4px;
+    padding: 50px 0;
+    z-index: 10;
+    border: 0;
+}
+.t3 {
+    width: calc(72% - 136px);
+}
+.window-title {
+    text-align: center;
+    font-size: 60px;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    color: #009CFF;
+    margin-bottom: 40px;
+}
+.manage-button {
+    padding: 6px;
+    float: right;
+    text-align: center;
+    display: inline-block;
+    width: 80px;
+    height: 38px;
+    border-left: solid 1px #e5e9ef;
+}
+.float-window .manage-button {
+    line-height: 38px;
+    width: calc(28% - 12px);
+    position: absolute;
+}
+.manage-button a {
+    font-size: 14px;
+    display: block;
+}
+.manage-button a:hover {
+    color: #00a1d6;
+}
+.reasonInput {
+    border: 1px #aaa solid;
+    border-radius: 4px;
+    width: 270px;
+    height: 40px;
+    padding: 0 15px;
+    font-size: 16px;
 }

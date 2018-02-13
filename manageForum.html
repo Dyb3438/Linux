@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="UTF-8">
+        <title>帖子管理</title>
+        <link rel="stylesheet" type="text/css" href="css/forum.css">
+        <style type="text/css"></style>
+    </head>
+    <body onselectstart="return false;">
+        <div class="banner" id="banner"></div>
+        <div class="menu">
+            <a href="index.html"><div class="logo"></div></a>
+            <input type="text" name="search" class="search" placeholder="搜索" formaction="" onkeyup="search(event, this.value)">
+            <div id="logined" style="display: none;">
+                <a href="javascript:void(0)"><div class="menu-button" onclick="logOff()">注销</div></a>
+                <a href="javascript:void(0)" target="_blank"><div class="menu-button" id="username"></div></a>
+                <a href="javascript:void(0)" target="_blank"><img src="userphoto/root.png" class="menu-avatar" id="avatar"></a>
+            </div>
+            <div id="unlogin" style="display: none;">
+                <a href="SignUp.html"><div class="menu-button">注册</div></a>
+                <a href="LogIn.html"><div class="menu-button">登录</div></a>
+            </div>
+        </div>
+        <div class="container">
+            <div id="top" class="forum-title">
+                <div class="title-body"><div class="t1 t3" title="论坛功能介绍"><a href="note.html?NoteId=2" target="_blank">[置顶]论坛功能介绍</a></div><div class="t2"><a href="author.html?userid=503553364" class="t2-author" title="用户ID 503553364">ID:503553364</a></div><div class="manage-button"><a href="">[删除]</a><a href="">[取消置顶]</a></div></div>
+            </div>
+            <div id="forum-title" class="forum-title">
+                <div class="title-body"><div class="t1 t3" title="论坛功能介绍"><a href="note.html?NoteId=2" target="_blank">论坛功能介绍</a></div><div class="t2"><a href="author.html?userid=123456" class="t2-author" title="用户ID 123456">ID:123456</a><span class="t2-time">2018-02-12 14:00:12</span></div><div class="manage-button"><a href="javascript:void(0)" onclick="delNote(2)">[删除]</a><a href="javascript:void(0)" onclick="topSet(2)">[置顶]</a></div></div>
+            </div>
+            <div id="page-area" class="page-body"></div>
+        </div>
+        <div id="topCheck" class="background-gray" style="display: none;">
+            <div class="float-window">
+                <div class="window-title">命运の二选一</div>
+                <div class="forum-title">
+                    <div class="title-body"><div class="t1" title="论坛功能介绍"><a href="note.html?NoteId=2" target="_blank">[置顶]论坛功能介绍</a></div><div class="manage-button"><a href="javascript:void(0)" onclick="updateTop(2)">[取消置顶]</a></div></div>
+                    <div class="title-body"><div class="t1" title="论坛功能介绍"><a href="note.html?NoteId=2" target="_blank">[置顶]论坛功能介绍</a></div><div class="manage-button t2"><a href="">[取消置顶]</a></div></div>
+                </div>
+                <button class="blueButton" onclick="topCancel()" style="margin-right: calc(50% - 36px)">取消选择</button>
+            </div>
+        </div>
+        <div id="delCheck" class="background-gray" style="display: none;">
+            <div class="float-window" style="text-align: center;">
+                <div class="window-title">真的要删除吗</div>
+                <div id="post-forum">
+                    <form method="POST" action="Delete_note.php" target="formTarget">
+                        <input type="hidden" name="Noteid" id="Noteid">
+                        <textarea name="Image" class="Content" placeholder="请说明原因"></textarea>
+                        <input type="submit" value="确定删除" class="sendButton" style="margin-left: 10px;">
+                        <button onsubmit="return false" type="button" class="blueButton" onclick="delCancel()">取消</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="js/ajax.js"></script>
+        <script type="text/javascript">
+            ajax({
+                "url": "User-image.php",
+                "method": "GET",
+                "success": function(res) {
+                    var unlogin = document.getElementById("unlogin");
+                    var logined = document.getElementById("logined");
+                    var avatar = document.getElementById("avatar");
+                    var username = document.getElementById("username");
+                    var msg = JSON.parse(res);
+                    if (msg.result == "N") {
+                        unlogin.style.display = "block";
+                    } else if (msg.result == "Y") {
+                        avatar.src = msg.userphoto;
+                        avatar.parentNode.href = "author.html?userid=" + msg.userid;
+                        username.innerHTML = msg.username;
+                        username.parentNode.href = "author.html?userid=" + msg.userid;
+                        logined.style.display = "block";
+                    }
+                }
+            });
+        </script>
+        <script src="js/forum.js"></script>
+        <script type="text/javascript" src="js/manage.js"></script>
+        <script type="text/javascript">
+            (function() {
+                var parm = getParm();
+                var page = parm.Page || 1;
+                ajax({
+                    "url": "Loading.php",
+                    "method": "GET",
+                    "data": {
+                        "Page": page
+                    },
+                    "success": function(res) {
+                        var response = resToJson(res);
+                        if (response.result == "N") {
+                            document.write("404 NOT FOUND!");
+                            return;
+                        }
+                        setPageButtonM(pageNumMsg(page, response.pages));
+                        setTlitleNoteM(response.note);
+                        if (page == 1) {
+                            setTlitleTop(response.top);
+                        } else {
+                            document.getElementById("top").style.display = "none";
+                        }
+                    }
+                })
+            })();
+        </script>
+        <iframe name="formTarget" id="formTarget" style="display: none;" onload="delRes(this)"></iframe>
+    </body>
+</html>
