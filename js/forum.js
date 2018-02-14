@@ -229,3 +229,42 @@ function search(e, s) {
         location.href = "search.html?Search=" + s;
     }
 }
+
+function setNotice() {
+    var boardButton = document.getElementById("boardButton");
+    status = localStorage.getItem("boardStatus") || "0";
+    if (status == "0") {
+        seeBoard(boardButton)
+    } else if (status == "1") {
+        hideBoard(boardButton)
+    }
+}
+
+function hideBoard(element) {
+    var noticeBoard = document.getElementById("notice-board");
+    noticeBoard.style.display = "none";
+    localStorage.setItem("boardStatus", "1");
+    element.innerHTML = "显示公告栏";
+    element.onclick = function() {
+        seeBoard(element);
+    }
+}
+
+function seeBoard(element) {
+    var noticeBoard = document.getElementById("notice-board");
+    var container = document.getElementById("notice-board-container");
+    ajax({
+        "url": "Notice.php",
+        "method": "GET",
+        "success": function(res) {
+            container.innerHTML = res;
+        }
+    })
+    noticeBoard.style.display = "block";
+    localStorage.setItem("boardStatus", "0");
+    element.innerHTML = "隐藏公告栏";
+    element.onclick = function() {
+        hideBoard(element);
+    }
+
+}

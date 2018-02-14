@@ -22,6 +22,10 @@
             </div>
         </div>
         <div class="container">
+            <div id="notice-board" class="forum-title">
+                <div class="title-body">..:: 公告栏 ::..</div>
+                <div id="notice-board-container"></div>
+            </div>
             <div id="top" class="forum-title"></div>
             <div id="forum-title" class="forum-title"></div>
             <div id="page-area" class="page-body"></div>
@@ -35,9 +39,10 @@
             </div>
         </div>
         <div class="right-side" id="right-side">
+            <a href="javascript:void(0)"><div class="right-side-button" onclick="hideBoard(this)" id="boardButton">隐藏公告栏</div></a>
             <a href="#post-forum"><div class="right-side-button">发帖</div></a>
             <a href="javascript:void(0)"><div class="right-side-button" onclick="location.reload()">刷新</div></a>
-            <a href="#banner"><div class="right-side-button">TOP</div></a>
+            <a href="#banner"><div class="right-side-button">返回顶部</div></a>
         </div>
         <script type="text/javascript" src="js/ajax.js"></script>
         <script type="text/javascript">
@@ -48,7 +53,7 @@
                     var unlogin = document.getElementById("unlogin");
                     var logined = document.getElementById("logined");
                     var avatar = document.getElementById("avatar");
-                    var rightPostButton = document.getElementById("right-side").children[0];
+                    var rightPostButton = document.getElementById("right-side").children[1];
                     var postForum = document.getElementById("post-forum");
                     var username = document.getElementById("username");
                     var msg = JSON.parse(res);
@@ -88,7 +93,9 @@
                         setTlitleNote(response.note);
                         if (page == 1) {
                             setTlitleTop(response.top);
+                            setNotice();
                         } else {
+                            document.getElementById("notice-board").style.display = "none";
                             document.getElementById("top").style.display = "none";
                         }
                     }
