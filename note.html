@@ -31,7 +31,7 @@
                 <form method="POST" action="Comment.php" target="formTarget">
                     <input type="hidden" name="Floor" id="Floor" value="0">
                     <input type="hidden" name="Noteid" id="Noteid">
-                    <textarea name="Content" class="Content" placeholder="说点什么吧~" required="required"></textarea>
+                    <div class="ContentF"><textarea name="Content" class="Content" placeholder="说点什么吧~" required="required"></textarea></div>
                     <input type="submit" value="回复" class="sendButton" style="margin-left: 10px;">
                     <button onsubmit="return false" type="button" class="blueButton" style="display: none;" id="quoteButton" onclick="quotoCancel()">取消引用</button>
                 </form>

@@ -95,8 +95,13 @@ function checkFollow(status, id) {
                     "Type": 1,
                     "Followed": id
                 },
-                "success": function(res) {
-                    setInfo(id);
+                "success": function(response) {
+                    var res = resToJson(response);
+                    if (res.result == "Y") {
+                        setInfo(id);
+                    } else if (res.result == "N") {
+                        alert(res.msg)
+                    }
                 }
             })
         }
@@ -111,8 +116,13 @@ function checkFollow(status, id) {
                     "Type": 0,
                     "Followed": id
                 },
-                "success": function(res) {
-                    setInfo(id);
+                "success": function(response) {
+                    var res = resToJson(response);
+                    if (res.result == "Y") {
+                        setInfo(id);
+                    } else if (res.result == "N") {
+                        alert(res.msg)
+                    }
                 }
             })
         }
