@@ -2,7 +2,9 @@
 <html lang="zh-cmn-Hans">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>注册</title>
+        <link rel="stylesheet" type="text/css" href="css/init.css">
         <link rel="stylesheet" type="text/css" href="css/sign.css">
         <style type="text/css">
             .loadAvatarButton {
@@ -150,7 +152,7 @@
                     var msg = JSON.parse(res);
                     if (msg.result == "Y") {
                         alert("你已登录！")
-                        location.pathname = "/WinterVacation2017/index.html";
+                        location.pathname = "index.html";
                     }
                 }
             });
@@ -345,7 +347,7 @@
                     if (message.result == "Y") {
                         alert("注册成功");
                         document.getElementById("apply").reset();
-                        location.pathname = "/WinterVacation2017/index.html";
+                        location.pathname = "/index.html";
                     } else if(message.result == "N") {
                         resetCode();
                         if (message.msg == "\u9a8c\u8bc1\u7801\u9519\u8bef\uff01") {

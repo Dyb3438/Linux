@@ -2,7 +2,9 @@
 <html lang="zh-cmn-Hans">
     <head>
         <meta charset="UTF-8">
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
         <title>聊天窗口</title>
+        <link rel="stylesheet" type="text/css" href="css/init.css">
         <link rel="stylesheet" type="text/css" href="css/chatWindow.css">
     </head>
     <body>
@@ -35,7 +37,7 @@
                     var res = resToJson(response);
                     if (res.result == "N") {
                         alert("未登录，请先登陆");
-                        location.href = "LogIn.html";
+                        location.href = "/WinterVacation2017/LogIn.html";
                     } else if (res.result == "Y") {
                         myId = res.userid;
                         header.innerHTML = "<img src='" + res.userphoto + "' class='avatar'><a href='javascript:void(0)' class='headerName' target='_blank'>" + res.username + "</a>";

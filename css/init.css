@@ -1,0 +1,10 @@
+* {
+    transition: all .2s;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+a {
+    text-decoration: none;
+}

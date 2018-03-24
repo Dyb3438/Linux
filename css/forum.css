@@ -1,15 +1,5 @@
-* {
-    transition: all .2s;
-}
 html,body {
-    margin: 0;
-    border: 0;
-    padding: 0;
     background-color: #D2E9FB;
-}
-form {
-    position: relative;
-    /*overflow: hidden;*/
 }
 .banner {
     height: 170px;
@@ -267,6 +257,10 @@ form {
 #username {
     color: #fb7299;
     font-weight: bold;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .page-body {
     display: inline-block;
@@ -459,4 +453,35 @@ form {
     height: 40px;
     padding: 0 15px;
     font-size: 16px;
+}
+@media screen and (max-width: 670px) {
+    .menu {
+        padding: 0;
+        width: 100%;
+    }
+    .logo {
+        display: none;
+    }
+    .container {
+        margin: 0;
+        width: 100%;
+    }
+    .float-window {
+        width: 100%;
+        left: 0;
+    }
+}
+@media screen and (max-width: 460px) {
+    .search {
+        width: 50px;
+    }
+    .t1 {
+        padding-left: 6px;
+    }
+    .t2 {
+        width: calc(28% + 32px);
+    }
+    #notice-board .title-body {
+        padding-left: 6px;
+    }
 }
