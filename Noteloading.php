@@ -1,4 +1,5 @@
 <?php
+session_start();
 function userTextDecode($str){
     $text = json_encode($str); //暴露出unicode
     $text = preg_replace_callback('/\\\\\\\\/i',function($str){
@@ -8,8 +9,8 @@ function userTextDecode($str){
 }
 $noteid=$_GET['NoteId'];
 $page=$_GET['Page'];
-if(isset($_COOKIE['userid'])){
-    $userid=$_COOKIE['userid'];
+if(isset($_SESSION['userid'])&&$_SESSION['timeout']<time()){
+    $userid=$_SESSION['userid'];
 }else{
     $userid="";
 }
@@ -127,8 +128,8 @@ if(isset($a)) {
         }
     }
         echo json_encode(array("floor" => $floor, "pages" => $pages, "notename" => $notename));
-        if(isset($_COOKIE['userid'])) {
-            if ($_COOKIE['userid'] == $noteuser) {
+        if(isset($_SESSION['userid'])&&$_SESSION['timeout']>time()) {
+            if ($_SESSION['userid'] == $noteuser) {
                 include_once("pdo_usersmoment.php");
                 $sql_findif = "select `id`,`comment` from `$noteuser` where `comment` like 'new-$noteid-%'";
                 $res_findif = $dbh->query($sql_findif);

@@ -18,7 +18,8 @@ if($code==$_SESSION['code']) {
             if ($userpassword == $row['userpassword']) {
                 $msg = "";
                 $result = "Y";
-                setcookie("userid",$userid,time()+24*60*60);
+                $_SESSION['userid']=$userid;
+                $_SESSION['timeout']=time()+24*60*60;
                 $a = 0;
             } else {
                 $msg = "密码错误！";

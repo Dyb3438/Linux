@@ -1,4 +1,5 @@
 <?php
+session_start();
 function userTextDecode($str){
     $text = json_encode($str); //暴露出unicode
     $text = preg_replace_callback('/\\\\\\\\/i',function($str){
@@ -6,8 +7,8 @@ function userTextDecode($str){
     },$text); //将两条斜杠变成一条，其他不动
     return json_decode($text);
 }
-if($_COOKIE['userid']) {
-    $userid = $_COOKIE['userid'];
+if(isset($_SESSION['userid'])&&$_SESSION['timeout']>time()) {
+    $userid = $_SESSION['userid'];
     include_once("pdo_usersmoment.php");
     $sql_findmoment = "select*from `$userid` order by `id` desc";
     $res_findmoment = $dbh->query($sql_findmoment);

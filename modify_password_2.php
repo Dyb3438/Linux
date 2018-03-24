@@ -1,17 +1,18 @@
 <?php
-if(isset($_COOKIE['userid'])) {
+session_start();
+if(isset($_SESSION['userid'])&&$_SESSION['timeout']>time()) {
     $code = $_POST['Code'];
     $password = $_POST['NewPassword'];
-    $userid=$_COOKIE['userid'];
-    if(isset($_COOKIE[$code])){
-        $code_userid=$_COOKIE[$code];
+    $userid=$_SESSION['userid'];
+    if(isset($_SESSION[$code])){
+        $code_userid=$_SESSION["$code"];
+        unset($_SESSION["$code"]);
         if($code_userid==$userid){
             include_once("pdo_db.php");
             $sql="update `users` set `userpassword`='$password' where `userid`=$userid";
             $res=$dbh->exec($sql);
             if($res){
                 echo json_encode(array("result"=>"Y"));
-                setcookie($code,"");
             }else{
                 echo json_encode(array("result"=>"N","msg"=>"修改密码错误"));
             }

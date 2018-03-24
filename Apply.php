@@ -47,14 +47,15 @@ if($code!=$_SESSION['code']){
     if($res){
         $result="Y";
         $msg="";
-        setcookie("userid",$userid,time()+24*60*60);
+        $_SESSION['userid']=$userid;
+        $_SESSION['timeout']=time()+24*60*60;
     }else{
         $result="N";
         $msg="未录入数据库";
     }
     include_once("pdo_usersdb.php");
-    $sql_add="CREATE TABLE `users_db`.`$userid` (
-    `id` INT NOT NULL auto_increment,
+    $sql_add="CREATE TABLE `users-db`.`$userid` (
+    `id` INT NOT NULL auto_increment, 
     `userid` BIGINT(18) NOT NULL ,
     `m` int(1),
     `y` int(1),

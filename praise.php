@@ -1,6 +1,7 @@
 <?php
-if(isset($_COOKIE['userid'])){
-    $userid=$_COOKIE['userid'];
+session_start();
+if(isset($_SESSION['userid'])&&$_SESSION['timeout']>time()){
+    $userid=$_SESSION['userid'];
     $noteid=$_POST['Noteid'];
     $floor=$_POST['Floor'];
     $t_f=$_POST['Type'];

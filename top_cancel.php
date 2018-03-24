@@ -1,6 +1,7 @@
 <?php
-if(isset($_COOKIE['userid'])){
-    $userid=$_COOKIE['userid'];
+session_start();
+if(isset($_SESSION['userid'])&&$_SESSION['timeout']>time()){
+    $userid=$_SESSION['userid'];
     $noteid=$_POST['Noteid'];
     include_once("pdo_db.php");
     $sql_findpower="select `power` from `users` where `userid`='$userid'";

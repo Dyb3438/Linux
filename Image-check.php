@@ -1,4 +1,5 @@
 <?php
+session_start();
 function userTextDecode($str){
     $text = json_encode($str); //暴露出unicode
     $text = preg_replace_callback('/\\\\\\\\/i',function($str){
@@ -8,9 +9,9 @@ function userTextDecode($str){
 }
 $id=$_GET['Id'];
 $receiver=$_GET['Receiver'];
-if(isset($_COOKIE['userid'])){
+if(isset($_SESSION['userid'])&&$_SESSION['timeout']>time()){
     include_once("pdo_db.php");
-    $sender=$_COOKIE['userid'];
+    $sender=$_SESSION['userid'];
     $sql="select `id` from `chat-image` where `sender`=$receiver and `receiver`=$sender or `sender`=$sender and `receiver`=$receiver order by `id` desc limit 1";
     $res=$dbh->query($sql);
     $id2="0";

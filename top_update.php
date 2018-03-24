@@ -1,6 +1,7 @@
 <?php
-if(isset($_COOKIE['userid'])){
-    $userid=$_COOKIE['userid'];
+session_start();
+if(isset($_SESSION['userid'])&&$_SESSION['timeout']>time()){
+    $userid=$_SESSION['userid'];
     $top_id=$_POST['Top_id'];
     $cancel_id=$_POST['Cancel_id'];
     include_once("pdo_db.php");

@@ -1,6 +1,7 @@
 <?php
-if(isset($_COOKIE['userid'])){
-    $userid=$_COOKIE['userid'];
+session_start();
+if(isset($_SESSION['userid'])&&$_SESSION['timeout']>time()){
+    $userid=$_SESSION['userid'];
     $password=$_POST['Password'];
     include_once("pdo_db.php");
     $sql="select `userpassword` from `users` where `userid`=$userid";
@@ -21,7 +22,7 @@ if(isset($_COOKIE['userid'])){
                 // 将 $length 个数组元素连接成字符串
                 $code=$code.$chars[$keys[$i]];
             }
-            setcookie($code,$userid,time()+60*2);
+            $_SESSION["$code"]=$userid;
             echo json_encode(array("result"=>"Y","code"=>$code));
             $a=1;
         }

@@ -1,4 +1,5 @@
 <?php
+session_start();
 function userTextEncode($str){
     if(!is_string($str))return $str;
     if(!$str || $str=='undefined')return '';
@@ -15,8 +16,8 @@ $time=date("Y-m-d H:i:s");
 $content=userTextEncode($_POST['Content']);
 $quoter=$_POST['Floor'];
 $noteid=$_POST['Noteid'];
-if(isset($_COOKIE['userid'])){
-    $userid=$_COOKIE['userid'];
+if(isset($_SESSION['userid'])&&$_SESSION['timeout']>time()){
+    $userid=$_SESSION['userid'];
     $sql="INSERT INTO `$noteid` (`id`, `floorcontent`, `userid`, `quoter`, `time`, `praise`) VALUES (NULL, '$content', '$userid', '$quoter', '$time', NULL)";
     $sql2="update `forum` set `last-response-time`='$time' where `id`=$noteid";
     $res=$dbh->exec($sql);

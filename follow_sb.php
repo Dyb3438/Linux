@@ -1,7 +1,8 @@
 <?php
-if(isset($_COOKIE['userid'])) {
+session_start();
+if(isset($_SESSION['userid'])&&$_SESSION['timeout']>time()) {
     $followed = $_POST['Followed'];
-    $userid=$_COOKIE['userid'];
+    $userid=$_SESSION['userid'];
     $type=$_POST['Type'];
     if ($userid != $followed) {
         include_once("pdo_usersdb.php");

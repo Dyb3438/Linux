@@ -1,7 +1,8 @@
 <?php
-if(isset($_COOKIE['userid'])){
+session_start();
+if(isset($_SESSION['userid'])&&$_SESSION['timeout']>time()){
     include_once("pdo_usersdb.php");
-    $userid=$_COOKIE['userid'];
+    $userid=$_SESSION['userid'];
     $sql_find="select*from `$userid`";
     $res_find=$dbh->query($sql_find);
     $fans=array();

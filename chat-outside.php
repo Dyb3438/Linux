@@ -1,7 +1,8 @@
 <?php
-if(isset($_COOKIE['userid'])) {
+session_start();
+if(isset($_SESSION['userid'])&&$_SESSION['timeout']>time()) {
     include_once("pdo_db.php");
-    $userid=$_COOKIE['userid'];
+    $userid=$_SESSION['userid'];
     $sql = "select `readed` from `chat-image` where `receiver`='$userid' and `readed`='0'";
     $res=$dbh->query($sql);
     $number=0;

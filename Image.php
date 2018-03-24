@@ -1,4 +1,5 @@
 <?php
+session_start();
 $userid=$_GET['Userid'];
 include_once("pdo_db.php");
 $sql="select*from `users` where `userid`=$userid";
@@ -37,9 +38,9 @@ while($row=$res->fetch()){
     }
 }
 if(isset($username)) {
-    if(isset($_COOKIE['userid'])) {
-        if ($_COOKIE['userid'] != $userid) {
-            $visitor = $_COOKIE['userid'];
+    if(isset($_SESSION['userid'])&&$_SESSION['timeout']>time()) {
+        if ($_SESSION['userid'] != $userid) {
+            $visitor = $_SESSION['userid'];
             include_once("pdo_usersdb.php");
             $sql = "select*from`$visitor`";
             $res = $dbh->query($sql);

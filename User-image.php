@@ -1,6 +1,7 @@
 <?php
-if(isset($_COOKIE['userid'])) {
-    $userid = $_COOKIE['userid'];
+session_start();
+if(isset($_SESSION['userid'])&&$_SESSION['timeout']>time()) {
+    $userid = $_SESSION['userid'];
     include_once('pdo_db.php');
     $sql = "select `username`,`userphoto` from `users` where `userid`= $userid ";
     $res = $dbh->query($sql);

@@ -1,7 +1,5 @@
 <?php
-//ini_set("error_reporting","E_ALL & ~E_NOTICE");
-error_reporting(E_ALL);
-ini_set("display_error",1);
+ini_set("error_reporting","E_ALL & ~E_NOTICE");
 
 session_start();
 $yzm="";
@@ -9,6 +7,7 @@ for($i=0;$i<4;$i++)
 {
     $yzm.=dechex(rand(0,15));
 }
+
 $_SESSION["code"]=$yzm;
  $_width=75;
  $_height=25;

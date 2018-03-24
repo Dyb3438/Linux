@@ -1,4 +1,5 @@
 <?php
+session_start();
 function userTextEncode($str){
     if(!is_string($str))return $str;
     if(!$str || $str=='undefined')return '';
@@ -9,8 +10,8 @@ function userTextEncode($str){
     },$text); //将emoji的unicode留下，其他不动，这里的正则比原答案增加了d，因为我发现我很多emoji实际上是\ud开头的，反而暂时没发现有\ue开头。
     return json_decode($text);
 }
-if(isset($_COOKIE['userid'])){
-    $sender=$_COOKIE['userid'];
+if(isset($_SESSION['userid'])&&$_SESSION['timeout']>time()){
+    $sender=$_SESSION['userid'];
     $receiver=$_POST['Receiver'];
     $chattext=userTextEncode($_POST['ChatText']);
     date_default_timezone_set("Asia/Shanghai");

@@ -6,8 +6,6 @@
  * Time: 14:43
  */
 include("pdo_db.php");
-
-
 if(isset($_POST['UserName'])){
     $sql="select username from users";
     $checkname=$dbh->query($sql);

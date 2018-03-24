@@ -1,7 +1,8 @@
 <?php
-if(isset($_COOKIE['userid'])) {
+session_start();
+if(isset($_SESSION['userid'])&&$_SESSION['timeout']>time()) {
     $userid=$_POST['UserId'];
-    if ($userid == $_COOKIE['userid']) {
+    if ($userid == $_SESSION['userid']) {
         $username=$_POST['UserName'];
         $sex=$_POST['Sex'];
         $birth=$_POST['Birth'];

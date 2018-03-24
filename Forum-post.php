@@ -1,4 +1,5 @@
 <?php
+session_start();
 function userTextEncode($str){
     if(!is_string($str))return $str;
     if(!$str || $str=='undefined')return '';
@@ -10,8 +11,8 @@ function userTextEncode($str){
     return json_decode($text);
 }
 
-if(isset($_COOKIE['userid'])){
-    $userid=$_COOKIE['userid'];
+if(isset($_SESSION['userid'])&&$_SESSION['timeout']>time()){
+    $userid=$_SESSION['userid'];
     $notename=userTextEncode($_POST['Notename']);
     $notecontent=userTextEncode($_POST['Content']);
     date_default_timezone_set("Asia/Shanghai");
