@@ -48,7 +48,7 @@
                     var msg = JSON.parse(res);
                     if (msg.result == "Y") {
                         alert("你已登录！")
-                        location.pathname = "index.html";
+                        location.pathname = "/WinterVacation2017/index.html";
                     }
                 }
             });
@@ -63,7 +63,7 @@
                     var message = JSON.parse(response.match(reg));
                     if (message.result == "Y") {
                         document.getElementById("client").reset();
-                        location.pathname = "index.html";
+                        location.pathname = "/WinterVacation2017/index.html";
                     } else if(message.result == "N") {
                         resetCode();
                         if (message.msg == "验证码错误！") {

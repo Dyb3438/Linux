@@ -150,7 +150,7 @@
                     var msg = JSON.parse(res);
                     if (msg.result == "Y") {
                         alert("你已登录！")
-                        location.pathname = "index.html";
+                        location.pathname = "/WinterVacation2017/index.html";
                     }
                 }
             });
@@ -345,7 +345,7 @@
                     if (message.result == "Y") {
                         alert("注册成功");
                         document.getElementById("apply").reset();
-                        location.pathname = "/index.html";
+                        location.pathname = "/WinterVacation2017/index.html";
                     } else if(message.result == "N") {
                         resetCode();
                         if (message.msg == "\u9a8c\u8bc1\u7801\u9519\u8bef\uff01") {

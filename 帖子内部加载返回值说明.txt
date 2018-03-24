@@ -1,0 +1,11 @@
+帖子内部加载用get传值，需要？NoteId=**&Page=**
+帖子内部返回的值解释：
+json内部第一层{“tiezi”：此部分是返回帖子内容；“floor”：此部分是返回楼层的信息，即评论区；“pages”：返回总页数}
+第二层就是"tiezi"和"floor"内部的内容：
+"tiezi"{"name":这个是帖子标题；"content":这个是帖子内容；"userid":发帖人；"time":这个是发帖时间；"praiseid":这个是点赞人数；
+          "T-Fpraise":这个返回能否点赞的状态值：1为已点赞，不能再点了；0为未点赞，可以点赞}
+"floor"{"content"，"userid","time","praiseid"和"T-Fpraise"都和上面是同一个道理;
+           在这层多了一个"quoter"（这是回复某个楼层的时候用的）这若返回了就是一个数组，
+           里面有被回复楼层的"content","userid"和"time"和刚加上了回复楼层“quoterid”，
+           如果这个楼层没有回复其他楼层，则返回的是空值"quoter"=""}
+    

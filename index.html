@@ -44,7 +44,7 @@
                 <div class="catchphrase">在这里，你能获取更多时间</div>
             </div>
             <div id="unlogin">
-                <div><a href="logIn.html"><button class="submit">登录</button></a></div>
+                <div><a href="LogIn.html"><button class="submit">登录</button></a></div>
                 <div><a href="SignUp.html"><button class="submit">注册</button></a></div>
                 <div><a href="forum.html"><button class="submit">游客访问</button></a></div>
             </div>
@@ -83,10 +83,10 @@
                     "success": function(res) {
                         var msg = JSON.parse(res);
                         if (msg.result == "Y") {
-                            location.pathname = "index.html";
+                            location.pathname = "WinterVacation2017/index.html";
                         } else if (msg.result == "N") {
                             alert("可能你姿势不对，注销失败");
-                            location.pathname = "index.html";
+                            location.pathname = "WinterVacation2017/index.html";
                         }
                     }
                 })
