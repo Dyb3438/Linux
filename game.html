@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>扫雷</title>
+        <link rel="stylesheet" type="text/css" href="">
+        <style type="text/css">
+            body{
+                text-align: center;
+            }
+            #container, .container{
+                display: inline-block;
+            }
+            .unit{
+                display: inline-block;
+                float: left;
+                height: 20px;
+                width: 20px;
+                background-color: gray;
+                border: 1px outset;
+                text-align: center;
+            }
+            .background-gray {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(128, 128, 128, .5);
+            }
+            .hang {
+                width: 100%;
+                min-height: 20px;
+                overflow: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>扫雷</h1>
+        <div>
+            <select onchange="chooseOption(this)">
+                <option value="1">初级</option>
+                <option value="2">中级</option>
+                <option value="3">高级</option>
+                <option value="0">自定义</option>
+            </select>
+            <div class="container">所用时间：<div id="timeNum" class="container">00：00</div></div>
+            <button onclick="save()">保存</button>
+            <button onclick="load()">读取上次存档</button>
+        </div>
+        <div id="container"></div>
+        <div id="custom" class="background-gray" style="display: none;">
+            <div class="float-window" style="text-align: center;">
+                <input type="text" id="xxx" placeholder="行">
+                <input type="text" id="yyy" placeholder="列">
+                <input type="text" id="zzz" placeholder="雷数">
+                <button onclick="customLevel()">确定</button>
+                <button onclick="hideWindow()">取消</button>
+            </div>
+        </div>
+        <script>
+            window.onload = function () {
+                document.oncontextmenu = function (e) {
+                    e.preventDefault();
+                }
+            }
+            var xx = 9; //行
+            var yy = 9; //列
+            var zz = 10; //雷数
+            var exploredArea = 0;
+            var field = {};
+            var mineNum = [];
+            var mineId = [];
+            var actHistory = [];
+            var time = 0;
+            var clock = null;
+            function init() {
+                window.clearInterval(clock);
+                //console.log(clock);
+                mineNum = [];
+                mineId = [];
+                field = {};
+                actHistory = [];
+                exploredArea = 0;
+                time = 0;
+                document.getElementById("timeNum").innerHTML = "00：00";
+            }
+            function setMine(i, x, y) {
+                var temp = 1 + Math.round((x * y - 1) * Math.random());
+                if (mineNum.indexOf(temp) == -1) {
+                    mineNum[i] = temp;
+                } else {
+                    setMine(i, x, y);
+                }
+            } //布雷
+            function setField(x, y, z) {
+                var container = document.getElementById("container");
+                container.style.width = y * 22 + "px";
+                var n = 1; //区域编号
+                var html = [];
+                for (var ix = 1; ix <= x; ix++) {
+                    html.push("<div class='hang'>");
+                    for (var iy = 1; iy <= y; iy++) {
+                        var unitId = ix + "_" + iy;
+                        html.push("<div id='" + unitId + "' class='unit' onclick='sweep(" + ix + ", " + iy + ");actHistory.push([" + ix + ", " + iy + "]);' onmousedown='flag(event, this)'></div>");
+                        if (mineNum.indexOf(n) != -1) {
+                            field[unitId] = "mine";
+                            mineId.push(unitId);
+                        }
+                        n++;
+                    }
+                    html.push("</div>");
+                }
+                container.innerHTML = html.join("");
+                container.onclick = function() {
+                    container.onclick = timeStart;
+                }
+                //console.log(clock);
+                //console.log(mineId);
+            }
+            function flag(e, element) {
+                if (e.button == 2) {
+                    if (element.innerHTML == "") {
+                        element.innerHTML = "<a style='color: green;'>F</a>";
+                    } else {
+                        element.innerHTML = "";
+                    }
+                }
+            }
+            function sweep(x, y) {
+                var unitId = x + "_" + y;
+                document.getElementById(unitId).onclick = "";
+                document.getElementById(unitId).onmousedown = "";
+                var around = 0;
+                // console.log(actHistory)
+                if (field[unitId] == "mine") {
+                    for (var i = 0; i <= mineId.length - 1; i++) {
+                        document.getElementById(mineId[i]).innerHTML = "<a style='color: red;'>X</a>";
+                        document.getElementById(unitId).onclick = "";
+                        document.getElementById(mineId[i]).onmousedown = "";
+                    }
+                    lose();
+                } else {
+                    for (var tempX = x - 1; tempX <= x + 1; tempX++) {
+                        for (var tempY = y - 1; tempY <= y + 1; tempY++) {
+                            var unitIdTemp = tempX + "_" + tempY;
+                            if (field[unitIdTemp] == "mine") {
+                                around = around + 1;
+                            }
+                        }
+                    }
+                    //console.log(around);
+                    if (around != 0) {
+                        document.getElementById(unitId).innerHTML = around;
+                    } else if (around == 0) {
+                        document.getElementById(unitId).style.backgroundColor = "white";
+                        for (var tempX = x - 1; tempX <= x + 1; tempX++) {
+                            for (var tempY = y - 1; tempY <= y + 1; tempY++) {
+                                var unitIdTemp = tempX + "_" + tempY;
+                                if (tempX > 0 && tempX <= xx && tempY > 0 && tempY <= yy) {
+                                    if (document.getElementById(unitIdTemp).onclick != null) {
+                                        sweep(tempX, tempY);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    exploredArea = exploredArea + 1;
+                    win();
+                }
+            }
+            function win() {
+                if (exploredArea == (xx * yy) - zz) {
+                    alert("你赢了！");
+                    resetField();
+                }
+            }
+            function lose() {
+                alert("你输了！");
+                resetField();
+            }
+            function resetField() {
+                document.getElementById("container").innerHTML = "";
+                chooseLevel(xx, yy, zz);
+            }
+            function chooseLevel(x, y, z) {
+                if (x > 0 && y > 0 && z < (x * y)) {
+                    xx = x;
+                    yy = y;
+                    zz = z;
+                    init();
+                    for (var i = 0; i <= zz - 1; i++) {
+                        setMine(i, xx, yy);
+                    }
+                    setField(xx, yy, zz);
+                } else {
+                    alert("参数不合法！");
+                    seeWindow();
+                }
+            }
+            function customLevel() {
+                hideWindow();
+                chooseLevel(parseInt(document.getElementById("xxx").value), parseInt(document.getElementById("yyy").value), parseInt(document.getElementById("zzz").value));
+            }
+            function seeWindow() {
+                document.getElementById("custom").style.display = "block";
+            }
+            function hideWindow() {
+                document.getElementById("custom").style.display = "none";
+            }
+            function chooseOption(element) {
+                switch (element.value) {
+                    case "0":
+                        seeWindow();
+                        break;
+                    case "1":
+                        chooseLevel(9, 9, 10);
+                        break;
+                    case "2":
+                        chooseLevel(16, 16, 40);
+                        break;
+                    case "3":
+                        chooseLevel(16, 30, 99);
+                        break;
+                }
+                element.value = "";
+            }
+            function timeStart() {
+                //console.log(clock);
+                document.getElementById("container").onclick = null;
+                timer();
+                clock = setInterval("timer()", 1000);
+            }
+            function timer() {
+                document.getElementById("timeNum").innerHTML = checkTimeMinute(time) + "：" + checkTimeSecond(time);
+                ++time;
+            }
+            function checkTimeSecond(i) {
+                var s = i % 60;
+                if (s < 10) {
+                    s = "0" + s
+                }
+                return s;
+            }
+            function checkTimeMinute(i) {
+                var m = Math.floor(i / 60);
+                if (m < 10) {
+                    m = "0" + m
+                }
+                return m;
+            }
+            function save() {
+                localStorage.setItem("time", time);
+                localStorage.setItem("xx", xx);
+                localStorage.setItem("yy", yy);
+                localStorage.setItem("zz", zz);
+                localStorage.setItem("actHistory", JSON.stringify(actHistory));
+                localStorage.setItem("mineNum", JSON.stringify(mineNum));
+                alert("保存成功");
+            }
+            function load() {
+                if (localStorage.getItem("xx") == undefined) {
+                    alert("没有存档");
+                    return;
+                }
+                init();
+                time = parseInt(localStorage.getItem("time"));
+                xx = parseInt(localStorage.getItem("xx"));
+                yy = parseInt(localStorage.getItem("yy"));
+                zz = parseInt(localStorage.getItem("zz"));
+                actHistory = JSON.parse(localStorage.getItem("actHistory"));
+                mineNum = JSON.parse(localStorage.getItem("mineNum"));
+                setField(xx, yy, zz);
+                for (var i = actHistory.length - 1; i >= 0; i--) {
+                    sweep(parseInt(actHistory[i][0]), parseInt(actHistory[i][1]));
+                }
+            }
+            chooseLevel(xx, yy, zz);
+        </script>
+    </body>
+</html>
