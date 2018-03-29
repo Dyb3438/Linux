@@ -9,7 +9,7 @@ function userTextDecode($str){
 }
 $noteid=$_GET['NoteId'];
 $page=$_GET['Page'];
-if(isset($_SESSION['userid'])&&$_SESSION['timeout']<time()){
+if(isset($_SESSION['userid'])&&$_SESSION['timeout']>time()){
     $userid=$_SESSION['userid'];
 }else{
     $userid="";
